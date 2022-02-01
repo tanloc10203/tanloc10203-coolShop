@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+:root {
+  --color-page-err: #172b4d;
+  --color-input: #adb5bd;
+
+  --color-sidebar-light: linear-gradient(195deg, #42424a, #191919);
+  --color-sidebar-bg-submenu: linear-gradient(195deg, #f8f8f8, #fff);
+  --color-bg-sidebar-dark: #1f283e;
+  --color-text-dark: #ffffff;
+  --color-text-light: #222223;
+  --color-primary: #267fea;
+  --color-success: #53ac57;
+  --color-bg-primary-sidebar: #3b94ee;
+  --color-bg-hover-sidebar-light: #565659;
+  --color-bg-hover-sidebar-dark: #4c5365;
+
+  --color-bg-dark: #1a2035;
+  --color-main-light: #f0f2f5;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.breadcrumb {
+  margin-bottom: 0;
+}
+
+hr {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.08);
+  height: 0.0625rem;
+  margin: 1rem 0;
+  border-bottom: none;
+  opacity: 0.25;
+  background-color: transparent;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff, rgba(255, 255, 255, 0));
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.custom {
+  .Toastify__toast--success {
+    .Toastify__toast-body {
+      color: green;
+    }
+  }
+
+  .Toastify__toast--warning {
+    .Toastify__toast-body {
+      color: #fe9e19;
+    }
+  }
+
+  .Toastify__toast--error {
+    .Toastify__toast-body {
+      color: red;
+    }
+  }
+
+  .Toastify__toast--info {
+    .Toastify__toast-body {
+      color: blue;
+    }
+  }
+}
+
+.main-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 48px;
+
+  &__header {
+    background: linear-gradient(195deg, #49a3f1, #1a73e8);
+    color: #fff;
+    font-size: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    transform: translateY(calc(-100% + 16px));
+    box-shadow: 0rem 0.25rem 1.25rem 0rem rgb(0 0 0 / 14%), 0rem 0.4375rem 0.625rem -0.3125rem rgb(0 187 212);
+  }
+}
+
+.form-control.is-valid,
+.was-validated .form-control:valid {
+  border-color: #2dcfa0;
+}
+
+.b-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+}
+
+.card-body {
+  padding: 8px;
+}
+
+.card-text {
+  margin-bottom: 3px;
+}
+
+@media (max-width: 575.98px) {
+  .px-xs-0 {
+    padding: 0;
+  }
+
+  .d-xs-block{
+    display: block;
+  }
+}

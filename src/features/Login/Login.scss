@@ -1,0 +1,50 @@
+.loginMain {
+  min-height: 100vh;
+  max-height: 999px;
+  display: flex;
+  align-items: center;
+  color: var(--color-input);
+
+  &-wrapper {
+    .card {
+      border-radius: 8px;
+
+      &-body {
+        background: #f4f5f7;
+      }
+    }
+
+    .forget-pass {
+      text-align: left;
+      cursor: pointer;
+    }
+  }
+
+  &__btn-custom {
+    color: #fff;
+    background-color: #5e72e4;
+    border-color: #5e72e4;
+    box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+    padding: 0.625rem 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    transition: all 0.25s ease-in-out 0s;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+
+    &:hover {
+      box-shadow: 0 7px 14px rgb(50 50 93 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+      transform: translateY(-1px);
+      color: #fff;
+      background-color: #3d55df;
+      border-color: #324cdd;
+    }
+  }
+  &-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+}

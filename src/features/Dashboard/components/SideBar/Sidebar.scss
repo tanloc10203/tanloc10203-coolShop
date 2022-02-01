@@ -1,0 +1,130 @@
+.sidebar {
+  margin: 16px 2px;
+  background: var(--color-sidebar-light);
+  color: var(--color-text-dark);
+  border-radius: 12px;
+  min-height: 94vh;
+  max-height: 500px;
+  overflow: auto;
+  box-shadow: 0rem 1.25rem 1.6875rem 0rem rgb(0 0 0 / 5%);
+
+  &-close {
+    position: absolute;
+    top: 5px;
+    right: 13px;
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  &-header {
+    position: relative;
+    color: #fff;
+    display: flex;
+    font-family: Roboto;
+    font-size: 14px;
+
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.39998px;
+    line-height: 21px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 16px;
+  }
+
+  &-logo {
+    font-size: 30px;
+    margin-right: 5px;
+  }
+
+  &-main {
+    padding: 16px;
+
+    &__list-item {
+      border-radius: 0;
+
+      li {
+        cursor: pointer;
+        margin-bottom: 2px;
+        color: var(--color-text-dark);
+        background: transparent;
+        border: 0;
+        border-radius: 6px !important;
+        font-weight: 300;
+        &:hover {
+          background: var(--color-bg-hover-sidebar-light);
+          color: var(--color-text-dark);
+        }
+      }
+
+      .list-group-item:first-child,
+      .list-group-item:last-child {
+        border-radius: 0;
+      }
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.1876px;
+      line-height: 32.5px;
+      text-decoration: none;
+      color: #ffff;
+
+      &:hover {
+        color: unset;
+      }
+
+      &-link {
+        padding: 0 100% 0 0;
+      }
+
+      svg {
+        font-size: 20px;
+        margin-right: 16px;
+      }
+    }
+
+    &__submenu {
+      border-left: 1px dotted;
+      margin: 0 0 0 17px;
+      border-radius: inherit;
+
+      a {
+        color: var(--color-text-dark);
+        text-decoration: none;
+      }
+
+      li.active {
+        font-weight: 500;
+        background: var(--color-bg-primary-sidebar);
+        color: var(--color-text-dark);
+        
+        &:hover {
+          font-weight: 500;
+          background: var(--color-bg-primary-sidebar);
+          color: var(--color-text-dark);
+        }
+      }
+
+      li {
+        margin-left: 3px;
+        transition: all 0.25s ease-in-out 0s;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+        }
+      }
+    }
+
+    &__nav-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      svg {
+        transition: all 0.25s ease-in-out 0s;
+      }
+    }
+  }
+}
