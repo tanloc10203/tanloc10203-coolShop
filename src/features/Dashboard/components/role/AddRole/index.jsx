@@ -11,31 +11,33 @@ const findRoleById = (id, data) => {
     let role = {};
 
     if (data && data.length > 0) {
-      role = data.find(r => r._id === id);
+      role = data.find((r) => r._id === id);
     }
 
     return {
       code: role.code,
-      name: role.name
-    }
+      name: role.name,
+    };
   }
 };
 
 function AddRole() {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const isAddMode = !id;
-  const { data, create } = useSelector(state => state.role);
+  const { data, create } = useSelector((state) => state.role);
 
   useEffect(() => {
-    create && navigate("/admin/role", { replace: true });
+    create && navigate('/admin/role', { replace: true });
   }, [create, navigate]);
 
-  const initialValues = isAddMode ? {
-    name: "",
-    code: ""
-  } : findRoleById(id, data);
+  const initialValues = isAddMode
+    ? {
+        name: '',
+        code: '',
+      }
+    : findRoleById(id, data);
 
   const handleSubmit = (data, { setSubmitting, resetForm }) => {
     return new Promise((resolve, reject) => {
@@ -44,7 +46,7 @@ function AddRole() {
 
         setTimeout(() => {
           if (isAddMode) {
-            token && dispatch(createRole({ data, token }))
+            token && dispatch(createRole({ data, token }));
             resetForm(initialValues);
           } else {
             token && dispatch(updateRole({ id, token, data }));
@@ -56,10 +58,10 @@ function AddRole() {
         reject(error);
       }
     });
-  }
+  };
 
   return (
-    <Home name={isAddMode ? "Thêm quyền" : "Cập nhật quyền"}>
+    <Home name={isAddMode ? 'Thêm quyền' : 'Cập nhật quyền'}>
       <main className="main-role mt-5">
         <Container fluid className="px-3">
           <Row>
@@ -74,8 +76,7 @@ function AddRole() {
         </Container>
       </main>
     </Home>
-  )
+  );
 }
 
 export default AddRole;
-

@@ -8,11 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
-import TableRole from '../../components/TableRole';
+import TableRole from '../TableRole';
 
 function HomeRole(props) {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector(state => state.role);
+  const { data, loading } = useSelector((state) => state.role);
   const navigate = useNavigate();
 
   const fetchRoles = useCallback(() => {
@@ -23,33 +23,39 @@ function HomeRole(props) {
   useEffect(() => {
     let unmounted = false;
     !unmounted && fetchRoles();
-    return () => unmounted = true;
+    return () => (unmounted = true);
   }, [fetchRoles]);
 
-  const handleCloseRole = useCallback(item => {
-    if (item) {
-      const { name, code, _id } = item;
-      const token = localStorage.getItem('token');
+  const handleCloseRole = useCallback(
+    (item) => {
+      if (item) {
+        const { name, code, _id } = item;
+        const token = localStorage.getItem('token');
 
-      token && roleApi.deleteRole({ id: _id, token })
-        .then(response => {
-          const { error } = response;
-          if (error === 0) {
-            fetchRoles();
-            toast.success(`Bạn đã xóa thành công ${name} với mã là ${code}`, {
-              icon: <FontAwesomeIcon className="text-success" icon={faCheck} />
-            });
-          }
-        });
-    }
-  }, [fetchRoles]);
+        token &&
+          roleApi.deleteRole({ id: _id, token }).then((response) => {
+            const { error } = response;
+            if (error === 0) {
+              fetchRoles();
+              toast.success(`Bạn đã xóa thành công ${name} với mã là ${code}`, {
+                icon: <FontAwesomeIcon className="text-success" icon={faCheck} />,
+              });
+            }
+          });
+      }
+    },
+    [fetchRoles]
+  );
 
-  const handleUpdateRole = useCallback(item => {
-    if (item) {
-      const { _id } = item;
-      navigate(`/admin/role/update-role/${_id}`, { replace: true });
-    }
-  }, [navigate]);
+  const handleUpdateRole = useCallback(
+    (item) => {
+      if (item) {
+        const { _id } = item;
+        navigate(`/admin/role/update-role/${_id}`, { replace: true });
+      }
+    },
+    [navigate]
+  );
 
   return (
     <Home name="Quản lý quyền">
@@ -69,12 +75,9 @@ function HomeRole(props) {
       </main>
       <Outlet />
     </Home>
-  )
+  );
 }
 
-HomeRole.propTypes = {
-
-}
+HomeRole.propTypes = {};
 
 export default HomeRole;
-

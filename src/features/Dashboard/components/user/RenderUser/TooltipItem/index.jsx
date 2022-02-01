@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Tooltip } from 'reactstrap';
 
 function TooltipItem({ item, target }) {
@@ -7,15 +7,11 @@ function TooltipItem({ item, target }) {
 
   const toggle = () => {
     setTooltipOpen(!tooltipOpen);
-  }
+  };
+
   return (
     <span>
-      <Tooltip
-        placement="auto"
-        isOpen={tooltipOpen}
-        target={target}
-        toggle={toggle}
-      >
+      <Tooltip placement="auto" isOpen={tooltipOpen} target={target} toggle={toggle}>
         {item.text}
       </Tooltip>
     </span>

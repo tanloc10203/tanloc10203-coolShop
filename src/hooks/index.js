@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from 'react';
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -21,6 +21,5 @@ function useWindowScroll() {
   }, []);
   return scroll;
 }
-
 
 export { useWindowSize, useWindowScroll };

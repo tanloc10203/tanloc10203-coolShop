@@ -13,8 +13,7 @@ import User from './pages/User';
 
 const token = localStorage.getItem('token');
 
-if (token)
-  axios.defaults.headers.Authorization = `Bearer ${token}`;
+if (token) axios.defaults.headers.Authorization = `Bearer ${token}`;
 
 function Dashboard() {
   return (
@@ -23,28 +22,20 @@ function Dashboard() {
         <Route path="login" element={<LoginPage />} />
         <Route path="logout" element={<LogoutPage />} />
 
-        <Route
-          path="dashboard"
-          element={
-            <HomePage >
-              Trang chủ
-            </HomePage>
-          }
-        />
+        <Route path="dashboard" element={<HomePage>Trang chủ</HomePage>} />
 
         <Route path="user/*" element={<User />} />
         <Route path="role/*" element={<Role />} />
 
         <Route path="table" element={<Table />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="product" element={<Product />} />
+        <Route path="product/*" element={<Product />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Outlet />
     </>
-  )
+  );
 }
 
 export default Dashboard;
-

@@ -1,18 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  username: "",
-  password: "",
-}
+  username: '',
+  password: '',
+};
 
 const RegisterSlice = createSlice({
-  name: "register",
+  name: 'register',
   initialState,
-  reducers: {}
+  reducers: {},
 });
 
 const { reducer, actions } = RegisterSlice;
 
-export const { } = actions;
+export const {} = actions;
 export default reducer;

@@ -2,7 +2,7 @@ import Table from 'customs/customTable/Table';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { Button, Spinner } from 'reactstrap';
-import ModalTable from '../ModalTable';
+import ModalTable from '../../container/ModalTable';
 
 function TableRole({ data, loading, onCloseRole, onUpdate }) {
   const [open, setOpen] = useState(false);

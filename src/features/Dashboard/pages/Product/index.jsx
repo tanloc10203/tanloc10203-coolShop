@@ -1,18 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Home from '../Home'
+import HomeProduct from 'features/Dashboard/components/products/HomeProduct';
+import NewProduct from 'features/Dashboard/components/products/NewProduct';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 function Product(props) {
   return (
-    <Home name="Product">
-      Product
-    </Home>
-  )
+    <Routes>
+      <Route path="" element={<HomeProduct />} />
+      <Route path="new-product" element={<NewProduct />} />
+      <Route path="update-product" element={<NewProduct />} />
+    </Routes>
+  );
 }
 
-Product.propTypes = {
+Product.propTypes = {};
 
-}
-
-export default Product
-
+export default Product;

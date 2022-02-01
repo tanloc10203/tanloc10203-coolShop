@@ -9,25 +9,20 @@ function NavGroup(props) {
 
   return (
     <ListGroup className="sidebar-main__list-item">
-      {
-        routesAdmin && routesAdmin.length &&
-        routesAdmin.map((item, index) => {      
-            let onOpen = false;
-            item.sub_menu.forEach(item => {
-              if(item.path === location.pathname)
-                onOpen = true;
-            });
-          
+      {routesAdmin &&
+        routesAdmin.length &&
+        routesAdmin.map((item, index) => {
+          let onOpen = false;
+          item.sub_menu.forEach((item) => {
+            if (item.path === location.pathname) onOpen = true;
+          });
+
           return <NavItem key={index} navArr={item} onOpen={onOpen} />;
-        })
-      }
+        })}
     </ListGroup>
-  )
+  );
 }
 
-NavGroup.propTypes = {
+NavGroup.propTypes = {};
 
-}
-
-export default NavGroup
-
+export default NavGroup;

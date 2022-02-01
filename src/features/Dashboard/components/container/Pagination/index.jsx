@@ -1,18 +1,18 @@
-import { deleteUser, getUser } from "features/Dashboard/userSlice";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
-import { Col, Container, Row } from "reactstrap";
-import RenderUser from "../RenderUser";
-import { toast } from "utils";
-import { useNavigate } from "react-router-dom";
-import ModalTable from "../ModalTable";
+import { deleteUser, getUser } from 'features/Dashboard/userSlice';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Col, Container, Row } from 'reactstrap';
+import { toast } from 'utils';
+import ModalTable from '../ModalTable';
+import RenderUser from '../../user/RenderUser';
 
 function Pagination() {
+  const { data, totalPage, loading, isSuccess } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { data, totalPage, loading, isSuccess } = useSelector(state => state.user);
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const navigate = useNavigate()
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
 
@@ -32,35 +32,42 @@ function Pagination() {
     setPage(newPage);
   }, []);
 
-  const handleGetUserDelete = useCallback(user => {
+  const handleGetUserDelete = useCallback((user) => {
     setOpen(true);
     setItem(user);
   }, []);
 
-  const handleDeleteUser = useCallback((user) => {
-    setOpen(false);
-    const token = localStorage.getItem('token');
+  const handleDeleteUser = useCallback(
+    (user) => {
+      setOpen(false);
+      const token = localStorage.getItem('token');
 
-    if (token) {
-      dispatch(deleteUser({ id: user._id, token }));
-    } else {
-      toast.error("Phiên đăng nhập đã hết hạn!");
-    }
-  }, [dispatch]);
+      if (token) {
+        dispatch(deleteUser({ id: user._id, token }));
+      } else {
+        toast.error('Phiên đăng nhập đã hết hạn!');
+      }
+    },
+    [dispatch]
+  );
 
-  const handleUpdateUser = useCallback((user) => {
-    user && navigate("/admin/user/update-user", { replace: true, state: { user } });
-  }, [navigate]);
+  const handleUpdateUser = useCallback(
+    (user) => {
+      user && navigate('/admin/user/update-user', { replace: true, state: { user } });
+    },
+    [navigate]
+  );
 
   const renderListUser = useMemo(() => {
-    return <RenderUser
-      data={data || []}
-      loading={loading}
-      onDeleteUser={handleGetUserDelete}
-      onUpdateUser={handleUpdateUser}
-    />
+    return (
+      <RenderUser
+        data={data || []}
+        loading={loading}
+        onDeleteUser={handleGetUserDelete}
+        onUpdateUser={handleUpdateUser}
+      />
+    );
   }, [data, loading, handleGetUserDelete, handleUpdateUser]);
-
 
   return (
     <main className="main-user">
@@ -72,7 +79,7 @@ function Pagination() {
         close={handleDeleteUser}
       />
       <Container fluid className="px-sm-0 px-xs-0 px-md-3">
-        <Row >
+        <Row>
           <Col>
             <div className="main-card mt-5">
               <div className="main-card__header">Danh sách thành viên</div>
@@ -83,7 +90,7 @@ function Pagination() {
                 className="justify-content-end pagination"
                 pageCount={totalPage}
                 onPageChange={handleOnChangePage}
-                forcePage={page - 1}
+                forcePage={page === 0 ? 0 : page - 1}
                 previousLabel="&lt;"
                 nextLabel="&gt;"
                 pageClassName="page-item"
@@ -102,7 +109,7 @@ function Pagination() {
           </Col>
         </Row>
       </Container>
-    </main >
+    </main>
   );
 }
 

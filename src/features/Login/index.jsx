@@ -35,21 +35,21 @@ function Login() {
   };
 
   return (
-    <div className='loginMain'>
+    <div className="loginMain">
       <Container>
-        <Row className='justify-content-center'>
-          <Col xl={4} sm={8} md={6} className='loginMain-wrapper'>
+        <Row className="justify-content-center">
+          <Col xl={4} sm={8} md={6} className="loginMain-wrapper">
             <div className={`shadow border-0 card`}>
-              <div className='bg-white border-0 py-5 card-header'>
-                <h3 className='m-0 text-center'>Đăng nhập</h3>
+              <div className="bg-white border-0 py-5 card-header">
+                <h3 className="m-0 text-center">Đăng nhập</h3>
                 {errors ? (
-                  <p className='text-danger text-center'>
+                  <p className="text-danger text-center">
                     <cite>{errors?.err}</cite>
                   </p>
                 ) : null}
               </div>
 
-              <div className='px-lg-5 py-lg-5 card-body'>
+              <div className="px-lg-5 py-lg-5 card-body">
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchemaLogin}
@@ -58,36 +58,36 @@ function Login() {
                   {({ isSubmitting }) => {
                     if (isSubmitting) {
                       return (
-                        <div className='text-center'>
-                          <Spinner className='m-1' color='dark' type='grow' size='sm' />
-                          <Spinner className='m-1' color='dark' type='grow' size='sm' />
-                          <Spinner className='m-1' color='dark' type='grow' size='sm' />
+                        <div className="text-center">
+                          <Spinner className="m-1" color="dark" type="grow" size="sm" />
+                          <Spinner className="m-1" color="dark" type="grow" size="sm" />
+                          <Spinner className="m-1" color="dark" type="grow" size="sm" />
                         </div>
                       );
                     }
                     return (
                       <Form>
                         <FastField
-                          type='email'
-                          name='email'
-                          placeholder='Email'
+                          type="email"
+                          name="email"
+                          placeholder="Email"
                           icon={faEnvelope}
                           component={InputField}
-                          label='Email'
+                          label="Email"
                         />
 
                         <FastField
-                          label='Password'
+                          label="Password"
                           component={InputField}
-                          name='password'
-                          type='password'
-                          placeholder='Password'
+                          name="password"
+                          type="password"
+                          placeholder="Password"
                           icon={faKey}
                         />
 
-                        <p className='text-muted forget-pass'>Quên mật khẩu?</p>
+                        <p className="text-muted forget-pass">Quên mật khẩu?</p>
 
-                        <button type='submit' className='btn btn-primary loginMain__btn-custom'>
+                        <button type="submit" className="btn btn-primary loginMain__btn-custom">
                           Đăng nhập
                         </button>
                       </Form>

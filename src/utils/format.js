@@ -1,13 +1,13 @@
 export const formatDate = (date) => {
-  return new Intl.DateTimeFormat("en-GB").format(Date.parse(date));
+  return new Intl.DateTimeFormat('en-GB').format(Date.parse(date));
 };
 
-export const cutTextReplacement = (text = "", length) => {
+export const cutTextReplacement = (text = '', length) => {
   let replace = null;
   if (text && text.length >= length) {
-    replace = text.replace(text.slice(length, text.length), "...");
+    replace = text.replace(text.slice(length, text.length), '...');
     // console.log({relative: text.slice(length, text.length), length: text.length, text: text, replace: replace});
   } else replace = text;
 
   return replace;
-}
+};

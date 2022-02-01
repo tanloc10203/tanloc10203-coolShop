@@ -1,7 +1,7 @@
-import HomeUser from 'features/Dashboard/components/HomeUser';
+import HomeUser from 'features/Dashboard/components/user/HomeUser';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import NewUser from '../NewUser';
+import NewUser from '../../components/user/NewUser';
 
 function User() {
   return (
@@ -10,8 +10,7 @@ function User() {
       <Route path="new-user" element={<NewUser />} />
       <Route path="update-user" element={<NewUser />} />
     </Routes>
-  )
+  );
 }
 
-export default User
-
+export default User;

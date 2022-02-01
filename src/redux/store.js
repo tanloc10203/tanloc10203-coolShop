@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from 'features/Login/loginSlice';
 import registerReducer from 'features/Register/registerSlice';
 import headerReducer from 'features/Dashboard/headerSlice';
@@ -11,7 +11,7 @@ const rootReducers = {
   header: headerReducer,
   role: roleReducer,
   user: userReducer,
-}
+};
 
 const store = configureStore({
   reducer: rootReducers,
