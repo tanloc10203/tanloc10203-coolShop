@@ -44,3 +44,7 @@ export const validationSchemaRole = Yup.object().shape({
   name: Yup.string().min(5, 'Ít nhất 5 kí tự').required('Đây là trương bắt buộc'),
   code: Yup.string().required('Đây là trương bắt buộc'),
 });
+
+export const validationSchemaCategory = Yup.object().shape({
+  name: Yup.string().min(4, 'Ít nhất 4 kí tự').required('Đây là trường bắt buộc'),
+});

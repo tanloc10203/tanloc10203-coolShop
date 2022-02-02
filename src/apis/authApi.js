@@ -1,4 +1,4 @@
-import axios from "./axios";
+import axios from './axios';
 
 const authApi = {
   login: (data) => {
@@ -6,14 +6,14 @@ const authApi = {
   },
   getUserLogin: (token) => {
     return axios
-      .get('/auth/login', { headers: { 'Authorization': `Bearer ${token}` } })
-      .then(response => response)
-      .catch(err => {
+      .get('/auth/login', { headers: { Authorization: `Bearer ${token}` } })
+      .then((response) => response)
+      .catch((err) => {
         if (err.response) {
           return err.response.data;
         }
       });
-  }
-}
+  },
+};
 
 export default authApi;

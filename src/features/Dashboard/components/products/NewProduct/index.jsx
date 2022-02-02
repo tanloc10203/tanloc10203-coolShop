@@ -5,6 +5,13 @@ import Markdown from '../../Markdown';
 import { Col, Container, Row } from 'reactstrap';
 import FormikForm from 'customs/customForm/FormikForm';
 
+// name: { type: String, required: true, unique: true },
+//   price: { type: Number, required: true, unique: true },
+//   thumbnail: { type: String },
+//   num: { type: Number },
+//   key_product: String,
+//   category_id: { type: ObjectId, ref: "Category" },
+
 function NewProduct(props) {
   const isAddMode = true;
   const initialValues = {};

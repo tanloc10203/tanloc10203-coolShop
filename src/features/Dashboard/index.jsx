@@ -3,6 +3,7 @@ import LoginPage from 'features/Login';
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import axios from '../../apis/axios';
+import Category from './pages/Category';
 import HomePage from './pages/Home';
 import LogoutPage from './pages/Logout';
 import Product from './pages/Product';
@@ -30,6 +31,7 @@ function Dashboard() {
         <Route path="table" element={<Table />} />
         <Route path="profile" element={<Profile />} />
         <Route path="product/*" element={<Product />} />
+        <Route path="category/*" element={<Category />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

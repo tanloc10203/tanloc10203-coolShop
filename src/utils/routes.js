@@ -16,8 +16,15 @@ const routesAdmin = [
     sub_menu: [{ label: 'Thống kê', path: '/admin/dashboard' }],
   },
   {
+    id: 'profile',
+    label: 'Thông tin cá nhân',
+    path: '/admin/profile',
+    icon_main: faIdCardAlt,
+    sub_menu: [{ label: 'Thông tin cá nhân', path: '/admin/profile' }],
+  },
+  {
     id: 'user',
-    label: 'User',
+    label: 'Admin',
     path: '/admin/user',
     icon_main: faHome,
     sub_menu: [
@@ -27,7 +34,7 @@ const routesAdmin = [
   },
   {
     id: 'role',
-    label: 'Role',
+    label: 'Quyền',
     path: '/admin/role',
     icon_main: faShieldAlt,
     sub_menu: [
@@ -36,22 +43,18 @@ const routesAdmin = [
     ],
   },
   {
-    id: 'table',
-    label: 'Table',
-    path: '/admin/table',
+    id: 'category',
+    label: 'Danh mục',
+    path: '/admin/category',
     icon_main: faColumns,
-    sub_menu: [{ label: 'Thông tin tổng hợp', path: '/admin/table' }],
-  },
-  {
-    id: 'profile',
-    label: 'Profile',
-    path: '/admin/profile',
-    icon_main: faIdCardAlt,
-    sub_menu: [{ label: 'Thông tin cá nhân', path: '/admin/profile' }],
+    sub_menu: [
+      { label: 'Quản lý danh mục', path: '/admin/category' },
+      { label: 'Thêm danh mục', path: '/admin/category/create' },
+    ],
   },
   {
     id: 'Product',
-    label: 'Product',
+    label: 'Sản phẩm',
     path: '/admin/product',
     icon_main: faTasks,
     sub_menu: [

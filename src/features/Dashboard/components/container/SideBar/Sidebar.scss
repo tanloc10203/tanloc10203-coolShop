@@ -75,10 +75,6 @@
         color: unset;
       }
 
-      &-link {
-        padding: 0 100% 0 0;
-      }
-
       svg {
         font-size: 20px;
         margin-right: 16px;
@@ -99,7 +95,7 @@
         font-weight: 500;
         background: var(--color-bg-primary-sidebar);
         color: var(--color-text-dark);
-        
+
         &:hover {
           font-weight: 500;
           background: var(--color-bg-primary-sidebar);

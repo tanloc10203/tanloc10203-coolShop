@@ -4,6 +4,7 @@ import registerReducer from 'features/Register/registerSlice';
 import headerReducer from 'features/Dashboard/headerSlice';
 import roleReducer from 'features/Dashboard/roleSlice';
 import userReducer from 'features/Dashboard/userSlice';
+import categoryReducer from 'features/Dashboard/categorySlice';
 
 const rootReducers = {
   login: loginReducer,
@@ -11,6 +12,7 @@ const rootReducers = {
   header: headerReducer,
   role: roleReducer,
   user: userReducer,
+  category: categoryReducer,
 };
 
 const store = configureStore({
