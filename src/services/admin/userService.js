@@ -14,12 +14,20 @@ let handleUpdateUser = (id, data) => {
 
             const newData = {
               role_id: _id,
-              ...others
-            }
+              ...others,
+            };
 
-            updateUser = await User.findByIdAndUpdate(id, { $set: newData }, { new: true });
+            updateUser = await User.findByIdAndUpdate(
+              id,
+              { $set: newData },
+              { new: true }
+            );
           } else {
-            updateUser = await User.findByIdAndUpdate(id, { $set: data }, { new: true });
+            updateUser = await User.findByIdAndUpdate(
+              id,
+              { $set: data },
+              { new: true }
+            );
           }
           !updateUser && resolve({ error: 1, message: "User not found..." });
           resolve({ error: 0, message: "Update Success!!!" });
@@ -29,7 +37,7 @@ let handleUpdateUser = (id, data) => {
       reject(error);
     }
   });
-}
+};
 
 let handleGetUser = (page, limit) => {
   return new Promise(async (resolve, reject) => {
@@ -40,8 +48,10 @@ let handleGetUser = (page, limit) => {
 
         newPage = newPage < 1 ? 1 : newPage;
 
-        !newLimit && resolve({ error: 3, message: "Get user failed...", data: [] });
-        !newPage && resolve({ error: 4, message: "GET users failed", data: [] });
+        !newLimit &&
+          resolve({ error: 3, message: "Get user failed...", data: [] });
+        !newPage &&
+          resolve({ error: 4, message: "GET users failed", data: [] });
 
         const skip = (newPage - 1) * newLimit;
 
@@ -56,46 +66,58 @@ let handleGetUser = (page, limit) => {
 
         let count = await User.countDocuments({ delete: false });
 
-        users = users.map(user => {
+        users = users.map((user) => {
           let { password, ...others } = user._doc;
           return others;
         });
 
         const totalPage = Math.ceil(count / newLimit);
-        resolve({ error: 0, message: "GET users success!!!", totalPage, data: users });
+        resolve({
+          error: 0,
+          message: "GET users success!!!",
+          totalPage,
+          data: users,
+        });
       } else {
         let users = await User.find({ delete: false }).populate("role_id");
         let count = await User.countDocuments({ delete: false });
         !users && resolve({ error: 3, message: "Users not found..." });
-        users = users.map(user => {
+        users = users.map((user) => {
           let { password, ...others } = user._doc;
           return others;
         });
-        resolve({ error: 0, message: "Get users successfully!!!", data: users, count });
+        resolve({
+          error: 0,
+          message: "Get users successfully!!!",
+          data: users,
+          count,
+        });
       }
     } catch (error) {
       reject(error);
     }
   });
-}
+};
 
-let handleGetUserById = id => {
+let handleGetUserById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (id) {
-        await User.findById(id).populate("role_id").exec((err, user) => {
-          err && resolve({ error: 1, message: "Get user not found..." });
-          let { password, ...others } = user._doc;
-          resolve({ error: 0, message: "Get User Success!!!", data: others });
-        });
+        await User.findById(id)
+          .populate("role_id")
+          .exec((err, user) => {
+            err && resolve({ error: 1, message: "Get user not found..." });
+            let { password, ...others } = user._doc;
+            resolve({ error: 0, message: "Get User Success!!!", data: others });
+          });
       } else resolve({ error: 1, message: "Missing parameter..." });
     } catch (error) {
       reject(error);
     }
   });
-}
+};
 
-let handleDeleteUser = id => {
+let handleDeleteUser = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (id) {
@@ -108,11 +130,11 @@ let handleDeleteUser = id => {
       reject(error);
     }
   });
-}
+};
 
 module.exports = {
   handleUpdateUser,
   handleGetUser,
   handleGetUserById,
-  handleDeleteUser
+  handleDeleteUser,
 };
