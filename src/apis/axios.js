@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import Qs from 'qs';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
@@ -8,23 +8,22 @@ const instance = axios.create({
   headers: {
     'Content-type': 'application/json',
   },
-  paramsSerializer: params => Qs.stringify(params),
+  paramsSerializer: (params) => Qs.stringify(params),
 });
 
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     return config;
   },
-  err => Promise.reject(err)
-)
+  (err) => Promise.reject(err)
+);
 
 instance.interceptors.response.use(
-  response => {
-    if (response && response.data)
-      return response.data;
+  (response) => {
+    if (response && response.data) return response.data;
     return response;
   },
-  err => Promise.reject(err)
-)
+  (err) => Promise.reject(err)
+);
 
 export default instance;

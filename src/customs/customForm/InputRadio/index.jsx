@@ -8,8 +8,8 @@ function InputRadio(props) {
   const { icon, label, name, radioArr, errors, touched, values, isAddMode } = props;
   const showError = errors[name] && touched[name];
   const notError = values[name] && !errors[name] ? true : false;
-  const invalid = showError ? 'is-invalid' : "";
-  const valid = notError ? 'is-valid' : "";
+  const invalid = showError ? 'is-invalid' : '';
+  const valid = notError ? 'is-valid' : '';
 
   return (
     <>
@@ -19,8 +19,9 @@ function InputRadio(props) {
       </Label>
 
       <FormGroup>
-        {radioArr && radioArr.length
-          && radioArr.map((item, index) => (
+        {radioArr &&
+          radioArr.length &&
+          radioArr.map((item, index) => (
             <FormGroup inline check key={index}>
               <Field
                 type="radio"
@@ -30,7 +31,9 @@ function InputRadio(props) {
                 disabled={!isAddMode}
                 className={`form-check-input ${invalid} ${valid}`}
               />
-              <Label htmlFor={item.value} check>{item.label}</Label>
+              <Label htmlFor={item.value} check>
+                {item.label}
+              </Label>
             </FormGroup>
           ))}
         <ErrorMessage name={name} component={FormFeedback} />
@@ -47,7 +50,7 @@ InputRadio.propTypes = {
 
 InputRadio.defaultProps = {
   icon: {},
-  label: "",
-}
+  label: '',
+};
 
 export default InputRadio;

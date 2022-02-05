@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import "./Table.scss";
+import './Table.scss';
 
 function Table({ listTitle, children, className }) {
   return (
-    <div className={"main-render " + className}>
+    <div className={'main-render ' + className}>
       <table>
         <thead>
           <tr>
             {listTitle && listTitle.length
-              ? listTitle.map((item, i) => (
-                <th key={i}>{item.title}</th>
-              )) : null
-            }
+              ? listTitle.map((item, i) => <th key={i}>{item.title}</th>)
+              : null}
           </tr>
         </thead>
-        <tbody>
-          {children && children}
-        </tbody>
+        <tbody>{children && children}</tbody>
       </table>
     </div>
   );
@@ -30,7 +26,7 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  className: "",
-}
+  className: '',
+};
 
 export default Table;

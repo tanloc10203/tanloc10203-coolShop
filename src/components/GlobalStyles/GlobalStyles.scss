@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
   --color-page-err: #172b4d;
@@ -55,7 +55,12 @@ hr {
   border-bottom: none;
   opacity: 0.25;
   background-color: transparent;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff, rgba(255, 255, 255, 0));
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    #ffffff,
+    rgba(255, 255, 255, 0)
+  );
 }
 
 a {
@@ -102,7 +107,8 @@ a {
     padding: 16px;
     border-radius: 8px;
     transform: translateY(calc(-100% + 16px));
-    box-shadow: 0rem 0.25rem 1.25rem 0rem rgb(0 0 0 / 14%), 0rem 0.4375rem 0.625rem -0.3125rem rgb(0 187 212);
+    box-shadow: 0rem 0.25rem 1.25rem 0rem rgb(0 0 0 / 14%),
+      0rem 0.4375rem 0.625rem -0.3125rem rgb(0 187 212);
   }
 }
 
@@ -131,7 +137,7 @@ a {
     padding: 0;
   }
 
-  .d-xs-block{
+  .d-xs-block {
     display: block;
   }
 }

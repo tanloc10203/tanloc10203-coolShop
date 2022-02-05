@@ -25,7 +25,7 @@ function FormikForm(props) {
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors, values, touched }) => {
-          // console.log({ errors, values, touched });
+          console.log({ errors, values, touched });
 
           return (
             <Form>

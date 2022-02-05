@@ -15,20 +15,18 @@ function InputField(props) {
   return (
     <FormGroup>
       <Label>
-        <FontAwesomeIcon className="text-muted" icon={icon} />
-        {" "}
+        <FontAwesomeIcon className="text-muted" icon={icon} />{' '}
         <span className="text-muted">{label}</span>
-        {type === "password" ? " | " : null}
-        {type === "password"
-          ? <span
+        {type === 'password' ? ' | ' : null}
+        {type === 'password' ? (
+          <span
             className="fw-bold"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             onClick={() => setOpenPass(!openPass)}
           >
-            {openPass ? "Ẩn" : "Hiện"}
+            {openPass ? 'Ẩn' : 'Hiện'}
           </span>
-          : null
-        }
+        ) : null}
       </Label>
 
       <Input
@@ -37,13 +35,13 @@ function InputField(props) {
         invalid={showError}
         disabled={disabled}
         placeholder={placeholder}
-        type={type === "password" ? (openPass ? "text" : "password") : null}
+        type={type === 'password' ? (openPass ? 'text' : 'password') : null}
         valid={notError}
       />
 
       <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>
-  )
+  );
 }
 
 InputField.propTypes = {
@@ -55,7 +53,7 @@ InputField.propTypes = {
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-}
+};
 
 InputField.defaultProps = {
   name: '',
@@ -63,7 +61,6 @@ InputField.defaultProps = {
   placeholder: '',
   disabled: false,
   label: '',
-}
+};
 
 export default InputField;
-

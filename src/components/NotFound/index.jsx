@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
-import styles from "./NotFound.module.scss";
+import styles from './NotFound.module.scss';
 
 function NotFound() {
   return (
     <div className={styles.errorPage}>
       <div className={styles.pageImage}></div>
-      <Container className='text-center'>
+      <Container className="text-center">
         <Row>
           <Col md={12}>
             <h1 className={styles.title}>404</h1>
@@ -19,8 +19,7 @@ function NotFound() {
       </Container>
       <Outlet />
     </div>
-  )
+  );
 }
 
-export default NotFound
-
+export default NotFound;

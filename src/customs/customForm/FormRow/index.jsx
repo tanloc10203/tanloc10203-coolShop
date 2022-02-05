@@ -6,8 +6,9 @@ import { Col, FormGroup } from 'reactstrap';
 function FormRow({ arrFileds, isAddMode }) {
   return (
     <FormGroup row>
-      {arrFileds && arrFileds.length > 0
-        && arrFileds.map((item, index) => (
+      {arrFileds &&
+        arrFileds.length > 0 &&
+        arrFileds.map((item, index) => (
           <Col md={6} key={index}>
             <FastField
               type={item.type}

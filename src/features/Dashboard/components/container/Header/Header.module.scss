@@ -28,6 +28,8 @@
   left: auto;
   right: 0;
   box-shadow: rgb(255 255 255 / 90%) 0 0 1px 1px;
+  --webkit-backdrop-filter: saturate(200%) blur(1.875rem);
+  --moz-backdrop-filter: saturate(200%) blur(1.875rem);
   backdrop-filter: saturate(200%) blur(1.875rem);
   background-color: transparent;
   z-index: 100;
@@ -54,7 +56,7 @@
   }
 }
 
-@media screen and (max-width: 348px){
+@media screen and (max-width: 348px) {
   .headerAction {
     flex-direction: column;
   }

@@ -1,22 +1,23 @@
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from 'components/ProtectRouter';
 import FormikForm from 'customs/customForm/FormikForm';
 import InputField from 'customs/customForm/InputField';
+import { createCategory, updateCategory } from 'features/Dashboard/categorySlice';
 import Home from 'features/Dashboard/pages/Home';
 import { FastField } from 'formik';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { validationSchemaCategory } from 'utils';
-import { useAuth } from 'components/ProtectRouter';
-import { createCategory } from 'features/Dashboard/categorySlice';
-import { useNavigate } from 'react-router-dom';
 
 function CreateCategory() {
   const dispatch = useDispatch();
-  const token = useAuth();
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const token = useAuth();
   const { isSuccess } = useSelector((state) => state.category);
-  const initialValues = { name: '' };
-  const isAddMode = true;
+  const isAddMode = !state;
+  const initialValues = isAddMode ? { name: '' } : { name: state?.name };
 
   useEffect(() => {
     if (isSuccess) {
@@ -27,9 +28,17 @@ function CreateCategory() {
   const handleOnSubmit = (values, { resetForm, setSubmitting }) => {
     return new Promise((resolve) => {
       if (token) {
+        console.log('values', values);
         setTimeout(async () => {
-          const response = await dispatch(createCategory({ token, data: values }));
+          let response = null;
+          if (isAddMode) {
+            response = await dispatch(createCategory({ token, data: values }));
+          } else {
+            response = await dispatch(updateCategory({ token, id: state?._id, data: values }));
+          }
+
           const { payload } = response;
+
           if (payload) {
             const { error } = payload;
             if (error === 0) resetForm();
