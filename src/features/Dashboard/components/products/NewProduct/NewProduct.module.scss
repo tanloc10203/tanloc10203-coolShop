@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .doted {
+    border-bottom: 2px dashed;
+    flex: 2;
+  }
+}
+
+.active {
+  background: #000;
+}
+
+.activeText {
+  color: #000;
+  font-weight: bold;
+}

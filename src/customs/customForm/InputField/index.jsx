@@ -5,7 +5,7 @@ import React from 'react';
 import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 
 function InputField(props) {
-  const { icon, form, field, type, label, placeholder, disabled } = props;
+  const { icon, form, field, type, label, placeholder, disabled, hidden } = props;
   const { errors, touched, values } = form;
   const { name } = field;
   const showError = errors[name] && touched[name];
@@ -14,7 +14,7 @@ function InputField(props) {
 
   return (
     <FormGroup>
-      <Label>
+      <Label htmlFor={name}>
         <FontAwesomeIcon className="text-muted" icon={icon} />{' '}
         <span className="text-muted">{label}</span>
         {type === 'password' ? ' | ' : null}
@@ -34,9 +34,11 @@ function InputField(props) {
         {...field}
         invalid={showError}
         disabled={disabled}
+        hidden={hidden}
         placeholder={placeholder}
-        type={type === 'password' ? (openPass ? 'text' : 'password') : null}
+        type={type === 'password' ? (openPass ? 'text' : 'password') : type}
         valid={notError}
+        id={name}
       />
 
       <ErrorMessage name={name} component={FormFeedback} />
@@ -52,6 +54,7 @@ InputField.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  hidden: PropTypes.bool,
   label: PropTypes.string,
 };
 
@@ -61,6 +64,7 @@ InputField.defaultProps = {
   placeholder: '',
   disabled: false,
   label: '',
+  hidden: false,
 };
 
 export default InputField;

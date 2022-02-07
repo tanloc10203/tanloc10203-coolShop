@@ -1,8 +1,12 @@
 import {
+  faDollarSign,
   faEnvelope,
+  faGrinSquintTears,
   faKey,
   faMapMarkerAlt,
   faPhone,
+  faSignature,
+  faStarAndCrescent,
   faUserTag,
 } from '@fortawesome/free-solid-svg-icons';
 import InputField from 'customs/customForm/InputField';
@@ -72,5 +76,43 @@ export const arrPassAndConfirm = [
     placeholder: 'Nhập lại mật khẩu',
     component: InputField,
     icon: faKey,
+  },
+];
+
+export const arrNameAndPriceProduct = [
+  {
+    type: 'text',
+    name: 'name',
+    label: 'Tên sản phẩm',
+    placeholder: 'Nhập tên sản phẩm...',
+    component: InputField,
+    icon: faSignature,
+  },
+  {
+    type: 'number',
+    name: 'price',
+    label: 'Giá sản phẩm',
+    placeholder: 'Nhập giá sản phẩm...',
+    component: InputField,
+    icon: faDollarSign,
+  },
+];
+
+export const arrNumAndKeyProduct = [
+  {
+    type: 'number',
+    name: 'num',
+    label: 'Số lượng sản phẩm',
+    placeholder: 'Nhập số lượng sản phẩm...',
+    component: InputField,
+    icon: faGrinSquintTears,
+  },
+  {
+    type: 'text',
+    name: 'keyProduct',
+    label: 'Mã sản phẩm',
+    placeholder: 'Nhập mã sản phẩm...',
+    component: InputField,
+    icon: faStarAndCrescent,
   },
 ];

@@ -141,3 +141,11 @@ a {
     display: block;
   }
 }
+
+.dashed-white {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background: #fff;
+  z-index: 1;
+}
