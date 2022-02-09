@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GlobalStyles.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-image-lightbox/style.css';
 
 function GlobalStyles({ children }) {

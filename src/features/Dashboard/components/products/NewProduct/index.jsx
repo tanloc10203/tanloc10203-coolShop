@@ -125,7 +125,6 @@ function NewProduct(props) {
                       <FontAwesomeIcon className="text-muted" icon={faInfo} />{' '}
                       <span className="text-muted">{'Chi tiết sản phẩm'}</span>
                     </Label>
-                    <Markdown />
 
                     <FormGroup>
                       <Label htmlFor={'thumbnail'}>
