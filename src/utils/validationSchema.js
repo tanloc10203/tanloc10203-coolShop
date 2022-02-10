@@ -62,7 +62,6 @@ const FILE_SIZE = 1024 * 1024;
 
 export const validateSchemaProductNext = Yup.object().shape({
   disc: Yup.string().min(20).required(),
-  // detail: Yup.string().required(),
   thumbnail: Yup.mixed()
     .nullable()
     .required()

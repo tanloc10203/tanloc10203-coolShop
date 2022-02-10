@@ -2,14 +2,13 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import React, { useState } from 'react';
 import { axios } from '../../../../apis';
+import { PropTypes } from 'prop-types';
 
 const url = process.env.REACT_APP_API_URL;
 const URL_IMG = process.env.REACT_APP_URL_IMG;
 
-function Markdown(props) {
-  const [value, setValue] = useState('');
-
-  function uploadAdapter(loader) {
+function Markdown({ value, onChangeValueInput }) {
+  const uploadAdapter = (loader) => {
     return {
       upload: () => {
         return new Promise((resolve, reject) => {
@@ -32,7 +31,7 @@ function Markdown(props) {
         });
       },
     };
-  }
+  };
 
   function uploadPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -42,14 +41,10 @@ function Markdown(props) {
 
   return (
     <div className="App">
-      <h2>Using CKEditor 5 build in React</h2>
       <CKEditor
         editor={ClassicEditor}
         data={value}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setValue(data);
-        }}
+        onChange={onChangeValueInput}
         config={{
           extraPlugins: [uploadPlugin],
         }}
@@ -58,6 +53,9 @@ function Markdown(props) {
   );
 }
 
-Markdown.propTypes = {};
+Markdown.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChangeValueInput: PropTypes.func.isRequired,
+};
 
 export default Markdown;
