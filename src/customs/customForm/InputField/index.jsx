@@ -1,12 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
+import FormatNumberInput from 'features/Dashboard/components/container/FormatNumberInput';
 import { ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 
 function InputField(props) {
-  const { icon, form, field, type, label, placeholder, disabled, hidden } = props;
-  const { errors, touched, values } = form;
+  const { icon, form, field, type, label, placeholder, disabled, hidden, keys } = props;
+  const { errors, touched, values, setFieldValue } = form;
   const { name } = field;
   const showError = errors[name] && touched[name];
   const notError = values[name] && !errors[name] ? true : false;
@@ -29,17 +31,30 @@ function InputField(props) {
         ) : null}
       </Label>
 
-      <Input
-        name={name}
-        {...field}
-        invalid={showError}
-        disabled={disabled}
-        hidden={hidden}
-        placeholder={placeholder}
-        type={type === 'password' ? (openPass ? 'text' : 'password') : type}
-        valid={notError}
-        id={name}
-      />
+      {keys === 'number' ? (
+        <FormatNumberInput
+          placeholder={placeholder}
+          className={clsx('form-control', {
+            'is-invalid': showError,
+            'is-valid': notError,
+          })}
+          id={name}
+          value={values[name]}
+          onValueChange={(val) => setFieldValue(name, val.floatValue)}
+        />
+      ) : (
+        <Input
+          name={name}
+          {...field}
+          invalid={showError}
+          disabled={disabled}
+          hidden={hidden}
+          placeholder={placeholder}
+          type={type === 'password' ? (openPass ? 'text' : 'password') : type}
+          valid={notError}
+          id={name}
+        />
+      )}
 
       <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>

@@ -95,6 +95,7 @@ export const arrNameAndPriceProduct = [
     placeholder: 'Nhập giá sản phẩm...',
     component: InputField,
     icon: faDollarSign,
+    keys: 'number',
   },
 ];
 
@@ -106,10 +107,11 @@ export const arrNumAndKeyProduct = [
     placeholder: 'Nhập số lượng sản phẩm...',
     component: InputField,
     icon: faGrinSquintTears,
+    keys: 'number',
   },
   {
     type: 'text',
-    name: 'keyProduct',
+    name: 'key_product',
     label: 'Mã sản phẩm',
     placeholder: 'Nhập mã sản phẩm...',
     component: InputField,

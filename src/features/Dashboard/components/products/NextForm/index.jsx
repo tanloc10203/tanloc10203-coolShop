@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { ErrorMessage, FastField, Form, Formik } from 'formik';
 import { faAudioDescription, faFileUpload, faInfo } from '@fortawesome/free-solid-svg-icons';
 import InputField from 'customs/customForm/InputField';
-import { FormFeedback, FormGroup, Input, Label, Spinner } from 'reactstrap';
+import { Button, FormFeedback, FormGroup, Input, Label, Spinner } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Markdown from '../../Markdown';
 import PreviewImage from '../../PreviewImage';
 import { validateSchemaProductNext } from 'utils';
 
-function NextForm({ onSubmit, value, onChangeValue, isAddMode }) {
+function NextForm({ onSubmit, value, onChangeValue, isAddMode, onPrevForm, onCancelForm }) {
   const initialValues = {
     disc: '',
     thumbnail: null,
@@ -40,13 +40,11 @@ function NextForm({ onSubmit, value, onChangeValue, isAddMode }) {
               name="disc"
               component={InputField}
             />
-
             <Label>
               <FontAwesomeIcon className="text-muted" icon={faInfo} />{' '}
               <span className="text-muted">{'Chi tiết sản phẩm'}</span>
             </Label>
             <Markdown value={value} onChangeValueInput={onChangeValue} />
-
             <FormGroup>
               <Label htmlFor={'thumbnail'}>
                 <FontAwesomeIcon className="text-muted mt-3" icon={faFileUpload} />{' '}
@@ -64,10 +62,14 @@ function NextForm({ onSubmit, value, onChangeValue, isAddMode }) {
 
               <ErrorMessage name="thumbnail" component={FormFeedback} />
             </FormGroup>
-
             {values && values.thumbnail && <PreviewImage files={values.thumbnail} />}
-
-            <button type="submit" className={`btn btn-${!isAddMode ? 'success' : 'primary'} mb-5`}>
+            <Button color="secondary" className="text-light me-3" onClick={onPrevForm}>
+              Trở về
+            </Button>
+            <Button color="danger" className="text-light me-3" onClick={onCancelForm}>
+              Bỏ qua
+            </Button>
+            <button type="submit" className={`btn btn-${!isAddMode ? 'success' : 'primary'}`}>
               {isSubmitting ? (
                 <>
                   <Spinner className="m-1" type="grow" size="sm" />
@@ -90,6 +92,8 @@ NextForm.propTypes = {
   value: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  onPrevForm: PropTypes.func.isRequired,
+  onCancelForm: PropTypes.func.isRequired,
 };
 
 NextForm.defaultProps = {

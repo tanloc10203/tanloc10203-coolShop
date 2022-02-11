@@ -114,7 +114,7 @@ function NewUser() {
                 validationSchema={isAddMode ? validationSchemaRegister : validationSchemaUpdate}
                 onSubmit={handleOnSubmit}
                 isAddMode={isAddMode}
-                className="mt-5"
+                className="my-5"
                 action={isAddMode ? 'Thêm mới' : 'Chỉnh sửa'}
                 isRadio={{
                   type: 'radio',

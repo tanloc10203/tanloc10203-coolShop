@@ -50,11 +50,11 @@ export const validationSchemaCategory = Yup.object().shape({
 });
 
 export const validateSchemaProductCreate = Yup.object().shape({
-  name: Yup.string().min(5).required(),
-  price: Yup.number().min(5).required(),
-  num: Yup.number().required(),
-  keyProduct: Yup.string().required(),
-  category_id: Yup.string().required(),
+  name: Yup.string().min(5, 'Có ít nhất 5 kí tự').required('Đây là trường bắt buộc'),
+  price: Yup.number().min(1000, 'Giá thấp nhất là 1.000 đ').required('Đây là trường bắt buộc'),
+  num: Yup.number().required('Đây là trường bắt buộc'),
+  key_product: Yup.string().required('Đây là trường bắt buộc'),
+  category_id: Yup.string().required('Đây là trường bắt buộc'),
 });
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];

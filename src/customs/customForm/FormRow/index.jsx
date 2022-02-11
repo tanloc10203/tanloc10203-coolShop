@@ -11,6 +11,7 @@ function FormRow({ arrFileds, isAddMode }) {
         arrFileds.map((item, index) => (
           <Col md={6} key={index}>
             <FastField
+              keys={item.keys}
               type={item.type}
               name={item.name}
               label={item.label}

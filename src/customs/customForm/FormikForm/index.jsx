@@ -26,7 +26,7 @@ function FormikForm(props) {
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors, values, touched }) => {
-          console.log({ errors, values, touched });
+          // console.log(values);
 
           return (
             <Form>
@@ -51,10 +51,7 @@ function FormikForm(props) {
                   </Col>
                 )}
               </FormGroup>
-              <button
-                type="submit"
-                className={`btn btn-${!isAddMode ? 'success' : 'primary'} mb-5`}
-              >
+              <button type="submit" className={`btn btn-${!isAddMode ? 'success' : 'primary'}`}>
                 {isSubmitting ? (
                   <>
                     <Spinner className="m-1" type="grow" size="sm" />

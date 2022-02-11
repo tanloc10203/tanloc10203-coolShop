@@ -11,3 +11,7 @@ export const cutTextReplacement = (text = '', length) => {
 
   return replace;
 };
+
+export const formatPrice = (price = 0) => {
+  return (price = price?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+};

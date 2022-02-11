@@ -1,52 +1,69 @@
-import {
-  faAudioDescription,
-  faBook,
-  faFileUpload,
-  faInfo,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
 import { useAuth } from 'components/ProtectRouter';
 import FormikForm from 'customs/customForm/FormikForm';
 import FormRow from 'customs/customForm/FormRow';
 import { getCategory } from 'features/Dashboard/categorySlice';
 import Home from 'features/Dashboard/pages/Home';
+import { createProduct, updateProduct } from 'features/Dashboard/productSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Container, FormFeedback, FormGroup, Input, Label, Row, Spinner } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+import { Button, Col, Container, Row } from 'reactstrap';
 import { arrNameAndPriceProduct, arrNumAndKeyProduct, validateSchemaProductCreate } from 'utils';
-import styles from './NewProduct.module.scss';
-import clsx from 'clsx';
-import { ErrorMessage, FastField, Field, Form, Formik } from 'formik';
-import InputField from 'customs/customForm/InputField';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PreviewImage from '../../PreviewImage';
-import Markdown from '../../Markdown';
 import NextForm from '../NextForm';
+import styles from './NewProduct.module.scss';
 
 function NewProduct(props) {
+  const token = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data } = useSelector((state) => state.category);
+  const { dataCreate, dataUpdate } = useSelector((state) => state.product);
   const [arrSelect, setArrSelect] = useState([]);
   const [detailValue, setDetailValue] = useState('');
-  const token = useAuth();
-  const isAddMode = true;
-  const initialValues = {
-    name: '',
-    price: '',
-    num: '',
-    keyProduct: '',
-    category_id: '',
-  };
+  const [prevData, setPrevData] = useState({});
+  const [replace, setReplace] = useState(false);
+  const [next, setNext] = useState(false);
 
-  const handleOnSubmit = async (values) => {
-    await new Promise((r) => setTimeout(r, 500));
-    console.log({ values, detailValue });
-  };
+  const isAddMode = !replace;
+  const initialValues = isAddMode
+    ? {
+        name: '',
+        price: '',
+        num: '',
+        key_product: '',
+        category_id: '',
+      }
+    : Object.keys(prevData).length > 0 && prevData;
+
+  console.log(initialValues);
 
   useEffect(() => {
-    if (token) {
-      dispatch(getCategory({ token, key: 'ALL' }));
-    }
+    if (token) dispatch(getCategory({ token, key: 'ALL' }));
   }, [dispatch, token]);
+
+  useEffect(() => {
+    if (dataCreate && Object.keys(dataCreate).length > 0)
+      setPrevData({
+        name: dataCreate?.name,
+        price: dataCreate?.price,
+        num: dataCreate?.num,
+        key_product: dataCreate?.key_product,
+        category_id: dataCreate?.category_id,
+      });
+  }, [dataCreate]);
+
+  useEffect(() => {
+    if (dataUpdate && Object.keys(dataUpdate).length > 0)
+      setPrevData({
+        name: dataUpdate?.name,
+        price: dataUpdate?.price,
+        num: dataUpdate?.num,
+        key_product: dataUpdate?.key_product,
+        category_id: dataUpdate?.category_id,
+      });
+  }, [dataUpdate]);
 
   useEffect(() => {
     let array = [];
@@ -56,9 +73,39 @@ function NewProduct(props) {
     }
   }, [data]);
 
+  const handleOnSubmit = (values) => {
+    return new Promise((resolve) => {
+      if (token) {
+        setTimeout(async () => {
+          let result = null;
+          if (isAddMode) {
+            result = await dispatch(createProduct({ token, data: values }));
+          } else {
+            result = await dispatch(
+              updateProduct({ token, id: dataCreate && dataCreate._id, data: values })
+            );
+          }
+
+          if (result?.payload) {
+            const { error } = result?.payload;
+            if (error === 0) {
+              setNext(true);
+            }
+          }
+
+          resolve(true);
+        }, 1000);
+      }
+    });
+  };
+
   const handleChangeValue = (event, editor) => {
     const data = editor.getData();
     setDetailValue(data);
+  };
+
+  const handleOnCancelForm = () => {
+    navigate('/admin/product', { replace: true });
   };
 
   return (
@@ -68,37 +115,60 @@ function NewProduct(props) {
           <Col md={12}>
             <div className="main-card mt-5">
               <h4 className={clsx('main-card__header', styles.header)}>
-                <span className={styles.activeText}>Thêm thông tin</span>
-                <span className={clsx('dashed-white ms-3', styles.active)}></span>
-                <span className={styles.doted}></span>
-                <span className="dashed-white me-3"></span>
-                <span>Thêm chi tiết</span>
+                <span className={styles.activeText}>
+                  {isAddMode ? 'Thêm thông tin' : 'Thay đổi thông tin'}
+                </span>
+                <span className={clsx('dashed-white ms-3', styles.active)} />
+                <span
+                  className={clsx(styles.doted, {
+                    [styles.activeBorder]: next,
+                  })}
+                ></span>
+                <span
+                  className={clsx('dashed-white me-3', {
+                    [styles.active]: next,
+                  })}
+                />
+                <span
+                  className={clsx({
+                    [styles.activeText]: next,
+                  })}
+                >
+                  Thêm chi tiết
+                </span>
               </h4>
-              <FormikForm
-                initialValues={initialValues}
-                validationSchema={validateSchemaProductCreate}
-                onSubmit={handleOnSubmit}
-                action={'Tiếp tục'}
-                isAddMode={isAddMode}
-                disabledHeader
-                arrSelect={{
-                  name: 'category_id',
-                  arrOptions: arrSelect,
-                  label: 'Danh mục',
-                  icon: faBook,
-                  labelFirst: 'Chọn danh mục',
-                }}
-              >
-                <FormRow arrFileds={arrNameAndPriceProduct} isAddMode />
-                <FormRow arrFileds={arrNumAndKeyProduct} isAddMode />
-              </FormikForm>
-
-              {/* <NextForm
-                onSubmit={handleOnSubmit}
-                value={detailValue}
-                isAddMode={isAddMode}
-                onChangeValue={handleChangeValue}
-              /> */}
+              {next ? (
+                <NextForm
+                  onSubmit={handleOnSubmit}
+                  value={detailValue}
+                  isAddMode={isAddMode}
+                  onChangeValue={handleChangeValue}
+                  onPrevForm={() => {
+                    setNext(false);
+                    setReplace(true);
+                  }}
+                  onCancelForm={handleOnCancelForm}
+                />
+              ) : (
+                <FormikForm
+                  initialValues={initialValues}
+                  validationSchema={validateSchemaProductCreate}
+                  onSubmit={handleOnSubmit}
+                  action={isAddMode ? 'Thêm mới' : 'Thay đổi'}
+                  isAddMode={isAddMode}
+                  disabledHeader
+                  arrSelect={{
+                    name: 'category_id',
+                    arrOptions: arrSelect,
+                    label: 'Danh mục',
+                    icon: faBook,
+                    labelFirst: 'Chọn danh mục',
+                  }}
+                >
+                  <FormRow arrFileds={arrNameAndPriceProduct} isAddMode={isAddMode} />
+                  <FormRow arrFileds={arrNumAndKeyProduct} isAddMode={isAddMode} />
+                </FormikForm>
+              )}
             </div>
           </Col>
         </Row>
