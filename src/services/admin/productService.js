@@ -7,100 +7,172 @@ let handleGetProduct = (page, limit) => {
         let newPage = parseInt(page);
         let newLimit = parseInt(limit);
 
-        newPage = newPage < 1 && 1;
+        newPage = newPage < 1 ? 1 : newPage;
 
-        !newPage && resolve({ error: 2, message: "GET product failed", data: [] });
-        !newLimit && resolve({ error: 3, message: "GET product failed", data: [] });
+        !newPage &&
+          resolve({ error: 2, message: "GET product failed", data: [] });
+        !newLimit &&
+          resolve({ error: 3, message: "GET product failed", data: [] });
 
         const skip = (newPage - 1) * newLimit;
 
-        let products = await Product.find({ delete: false }).skip(skip).limit(newLimit);
+        let products = await Product.find({ delete: false })
+          .populate("category_id")
+          .skip(skip)
+          .limit(newLimit)
+          .exec();
         let count = await Product.countDocuments({ delete: false });
 
         const totalPage = Math.ceil(count / newLimit);
 
-        resolve({ error: 0, message: "GET product success!!!", data: products, totalPage });
+        resolve({
+          error: 0,
+          message: "GET product success!!!",
+          data: products,
+          totalPage,
+        });
       } else {
-        let products = await Product.find({ delete: false });
+        let products = await Product.find({ delete: false }).populate(
+          "category_id"
+        );
         !products && resolve({ error: 1, message: "GET product failed" });
-        resolve({ error: 0, message: "Get Product successfully!!!", data: products });
+        resolve({
+          error: 0,
+          message: "Get Product successfully!!!",
+          data: products,
+        });
       }
     } catch (error) {
       reject(error);
     }
   });
-}
+};
 
-let handleGetProductById = id => {
+let handleGetProductById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (id) {
         let product = await Product.findById(id);
-        !product && resolve({ error: 2, message: 'Product not found' });
-        resolve({ error: 0, message: "Get product successfully!!!", data: product });
-      } else
-        resolve({ error: 1, message: "Missing parameter..." });
+        !product && resolve({ error: 2, message: "Product not found" });
+        resolve({
+          error: 0,
+          message: "Get product successfully!!!",
+          data: product,
+        });
+      } else resolve({ error: 1, message: "Missing parameter..." });
     } catch (e) {
       reject(e);
     }
   });
-}
+};
 
-let handleCreateProduct = data => {
+let handleCreateProduct = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (data && data.name && data.price) {
-        let product = new Product({
+        const findProduct = await Product.findOne({
           name: data.name,
-          price: data.price,
           key_product: data.key_product,
           delete: false,
-          ...data
-        });
-        await product.save();
-        resolve({ error: 0, message: "Create product successfully!!!" });
-      } else
-        resolve({ error: 1, message: "Missing parameter..." });
+        }).exec();
+
+        if (findProduct) {
+          resolve({ error: 3, message: "Sản phẩm đã tồn tại" });
+        } else {
+          let product = new Product({
+            name: data.name,
+            price: data.price,
+            key_product: data.key_product,
+            delete: false,
+            ...data,
+          });
+          await product.save();
+          resolve({
+            error: 0,
+            message: "Create product successfully!!!",
+            data: product,
+          });
+        }
+      } else resolve({ error: 1, message: "Missing parameter..." });
     } catch (error) {
       reject(error);
     }
   });
-}
+};
 
 let handleUpdateProduct = (id, data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (data && id) {
-        const updateProduct = await Product.findByIdAndUpdate(id, { $set: data }, { new: true });
-        !updateProduct && resolve({ error: 2, message: "Product not found..." });
-        resolve({ error: 0, message: "Update Success!!!", updateProduct });
-      } else
-        resolve({ error: 1, message: "Missing parameter..." });
+        const findProduct = await Product.findOne({
+          _id: id,
+          delete: false,
+        }).exec();
+
+        const { name, key_product } = findProduct._doc;
+        let updateProduct = null;
+
+        if (data.name === name && data.key_product === key_product) {
+          updateProduct = await Product.findByIdAndUpdate(
+            id,
+            { $set: data },
+            { new: true }
+          ).exec();
+        } else {
+          const findProductExit = await Product.findOne({
+            name: data.name,
+            key_product: data.key_product,
+            delete: false,
+          }).exec();
+
+          if (findProductExit)
+            resolve({ error: 4, message: "Sản phẩm này đã tồn tại." });
+          else {
+            updateProduct = await Product.findByIdAndUpdate(
+              id,
+              { $set: data },
+              { new: true }
+            ).exec();
+          }
+        }
+
+        !updateProduct &&
+          resolve({ error: 3, message: "Không tìm thấy sản phẩm..." });
+        resolve({
+          error: 0,
+          message: "Update Success!!!",
+          data: updateProduct,
+        });
+      } else resolve({ error: 1, message: "Missing parameter..." });
     } catch (error) {
       reject(error);
     }
   });
-}
+};
 
-let handleDeleteProduct = id => {
+let handleDeleteProduct = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (id) {
-        const deleteProduct = await Product.findByIdAndUpdate(id, { delete: true }, { new: true });
-        !deleteProduct && resolve({ error: 2, message: "Product not found..." });
+        const deleteProduct = await Product.findByIdAndUpdate(
+          id,
+          { delete: true },
+          { new: true }
+        );
+        !deleteProduct &&
+          resolve({ error: 2, message: "Product not found..." });
         resolve({ error: 0, message: "Delete Success!!!" });
-      } else
-        resolve({ error: 1, message: "Missing parameter..." });
+      } else resolve({ error: 1, message: "Missing parameter..." });
     } catch (error) {
       reject(error);
     }
   });
-}
+};
 
 module.exports = {
   handleGetProduct,
   handleGetProductById,
   handleCreateProduct,
   handleUpdateProduct,
-  handleDeleteProduct
+  handleDeleteProduct,
 };
