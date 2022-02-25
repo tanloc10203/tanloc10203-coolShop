@@ -7,7 +7,7 @@ import React from 'react';
 import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 
 function InputField(props) {
-  const { icon, form, field, type, label, placeholder, disabled, hidden, keys } = props;
+  const { icon, form, field, type, label, placeholder, disabled, required, hidden, keys } = props;
   const { errors, touched, values, setFieldValue } = form;
   const { name } = field;
   const showError = errors[name] && touched[name];
@@ -29,6 +29,7 @@ function InputField(props) {
             {openPass ? 'Ẩn' : 'Hiện'}
           </span>
         ) : null}
+        {required ? <span className="text-danger"> (*)</span> : null}
       </Label>
 
       {keys === 'number' ? (

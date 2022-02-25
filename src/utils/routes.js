@@ -60,6 +60,7 @@ const routesAdmin = [
     sub_menu: [
       { label: 'Quản lý sản phẩm', path: '/admin/product' },
       { label: 'Thêm sản phẩm', path: '/admin/product/new-product' },
+      { label: 'Sản phẩm đã xóa', path: '/admin/product/trash' },
     ],
   },
 ];

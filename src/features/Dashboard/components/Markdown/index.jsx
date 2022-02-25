@@ -1,8 +1,8 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import React, { useState } from 'react';
-import { axios } from '../../../../apis';
 import { PropTypes } from 'prop-types';
+import React from 'react';
+import { axios } from '../../../../apis';
 
 const url = process.env.REACT_APP_API_URL;
 const URL_IMG = process.env.REACT_APP_URL_IMG;

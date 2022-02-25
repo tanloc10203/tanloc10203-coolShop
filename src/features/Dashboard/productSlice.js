@@ -16,20 +16,30 @@ const createProduct = createAsyncThunk('product/create', async ({ token, data })
   return response;
 });
 
-const getProduct = createAsyncThunk('product/get', async ({ token, limit, page }) => {
-  const response = await productApi.get({ token, limit, page });
+const getProduct = createAsyncThunk('product/get', async ({ token, limit, page, deleteInput }) => {
+  const response = await productApi.get({ token, limit, page, deleteInput });
   return response;
 });
 
-const updateProduct = createAsyncThunk('product/update', async ({ token, id, data }) => {
-  const response = await productApi.update({ token, id, data });
+const updateProduct = createAsyncThunk('product/update', async ({ token, id, data, recover }) => {
+  const response = await productApi.update({ token, id, data, recover });
   return response;
 });
+
+const deleteProduct = createAsyncThunk('product/delete', async ({ token, id, deleteInput }) => {
+  const response = await productApi.delete({ token, id, deleteInput });
+  return response;
+})
 
 const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsSuccess(state, { payload }) {
+      console.log(payload);
+      state.isSuccess = payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(createProduct.fulfilled, (state, { payload }) => {
       if (payload) {
@@ -57,6 +67,7 @@ const productSlice = createSlice({
     builder.addCase(getProduct.fulfilled, (state, { payload }) => {
       if (payload) {
         state.loading = false;
+        state.isSuccess = false;
         const { error, message, data, totalPage } = payload;
         if (error === 0) {
           state.totalPage = totalPage;
@@ -67,10 +78,21 @@ const productSlice = createSlice({
     builder.addCase(getProduct.rejected, (state) => {
       state.loading = false;
       state.dataGet = [];
+      state.totalPage = 0;
+    });
+    builder.addCase(deleteProduct.fulfilled, (state, { payload }) => {
+      if (payload) {
+        const { error, message, } = payload;
+        if (error === 0) {
+          state.isSuccess = true;
+        } else toast.warning(message);
+      }
     });
   },
 });
 
-const { reducer } = productSlice;
-export { createProduct, updateProduct, getProduct };
+const { reducer, actions } = productSlice;
+
+export { createProduct, updateProduct, getProduct, deleteProduct };
+export const { setIsSuccess } = actions;
 export default reducer;

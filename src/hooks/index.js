@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -22,4 +22,25 @@ function useWindowScroll() {
   return scroll;
 }
 
-export { useWindowSize, useWindowScroll };
+function useGetBase64Img(files) {
+  const [base64, setBase64] = useState([]);
+
+  useEffect(() => {
+    const getBaseFile = (file) => {
+      if (file) {
+        const reader = new FileReader();
+        let objURL = URL.createObjectURL(file);
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setBase64([objURL, reader.result]);
+        };
+      }
+    };
+    getBaseFile(files);
+  }, [files]);
+
+  return base64;
+}
+
+export { useWindowSize, useWindowScroll, useGetBase64Img };
+

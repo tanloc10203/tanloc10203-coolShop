@@ -1,18 +1,47 @@
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAudioDescription,
+  faBook,
+  faFileUpload,
+  faInfo,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { axios } from 'apis';
 import clsx from 'clsx';
 import { useAuth } from 'components/ProtectRouter';
-import FormikForm from 'customs/customForm/FormikForm';
 import FormRow from 'customs/customForm/FormRow';
+import InputField from 'customs/customForm/InputField';
+import InputSelect from 'customs/customForm/InputSelect';
 import { getCategory } from 'features/Dashboard/categorySlice';
 import Home from 'features/Dashboard/pages/Home';
 import { createProduct, updateProduct } from 'features/Dashboard/productSlice';
+import { ErrorMessage, FastField, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, Col, Container, Row } from 'reactstrap';
-import { arrNameAndPriceProduct, arrNumAndKeyProduct, validateSchemaProductCreate } from 'utils';
-import NextForm from '../NextForm';
+import {
+  Button,
+  Col,
+  Container,
+  FormFeedback,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+  Spinner,
+} from 'reactstrap';
+import {
+  arrNameAndPriceProduct,
+  arrNumAndKeyProduct,
+  getBase64,
+  toast,
+  validateSchemaProductCreate,
+} from 'utils';
+import Markdown from '../../Markdown';
+import PreviewImage from '../../PreviewImage';
 import styles from './NewProduct.module.scss';
+
+const url = process.env.REACT_APP_API_URL;
+const URL_IMG = process.env.REACT_APP_URL_IMG;
 
 function NewProduct(props) {
   const token = useAuth();
@@ -23,10 +52,10 @@ function NewProduct(props) {
   const [arrSelect, setArrSelect] = useState([]);
   const [detailValue, setDetailValue] = useState('');
   const [prevData, setPrevData] = useState({});
-  const [replace, setReplace] = useState(false);
-  const [next, setNext] = useState(false);
+  const [filesIMG, setFilesIMG] = useState(null);
+  const [imgUrl, setImgUrl] = useState('');
 
-  const isAddMode = !replace;
+  const isAddMode = true;
   const initialValues = isAddMode
     ? {
         name: '',
@@ -34,10 +63,10 @@ function NewProduct(props) {
         num: '',
         key_product: '',
         category_id: '',
+        disc: '',
+        thumbnail: '',
       }
     : Object.keys(prevData).length > 0 && prevData;
-
-  console.log(initialValues);
 
   useEffect(() => {
     if (token) dispatch(getCategory({ token, key: 'ALL' }));
@@ -73,13 +102,30 @@ function NewProduct(props) {
     }
   }, [data]);
 
-  const handleOnSubmit = (values) => {
+  const handleOnSubmit = (values, { resetForm, setSubmitting }) => {
     return new Promise((resolve) => {
       if (token) {
         setTimeout(async () => {
           let result = null;
+
           if (isAddMode) {
-            result = await dispatch(createProduct({ token, data: values }));
+            if (imgUrl) {
+              const newData = {
+                ...values,
+                detail: detailValue,
+                thumbnail: `${URL_IMG}${imgUrl}`,
+              };
+
+              console.log(newData);
+
+              const results = await dispatch(createProduct({ token, data: newData }));
+
+              if (results.payload && results.payload?.error === 0) {
+                toast.success('Thêm sản phẩm thành công');
+                resetForm();
+                navigate('/admin/product', { replace: true });
+              }
+            } else toast.warning('Vui lòng Upload Ảnh!!!');
           } else {
             result = await dispatch(
               updateProduct({ token, id: dataCreate && dataCreate._id, data: values })
@@ -89,10 +135,10 @@ function NewProduct(props) {
           if (result?.payload) {
             const { error } = result?.payload;
             if (error === 0) {
-              setNext(true);
+              resetForm();
             }
           }
-
+          setSubmitting(false);
           resolve(true);
         }, 1000);
       }
@@ -104,8 +150,24 @@ function NewProduct(props) {
     setDetailValue(data);
   };
 
-  const handleOnCancelForm = () => {
-    navigate('/admin/product', { replace: true });
+  const handleUploadImg = async () => {
+    if (filesIMG) {
+      try {
+        const formData = new FormData();
+        formData.append('files', filesIMG);
+        const response = await axios.post(`${url}admin/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        if (response && response?.filename) {
+          toast.success('Upload ảnh thành công.');
+          setImgUrl(response.filename);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -114,61 +176,111 @@ function NewProduct(props) {
         <Row>
           <Col md={12}>
             <div className="main-card mt-5">
-              <h4 className={clsx('main-card__header', styles.header)}>
-                <span className={styles.activeText}>
-                  {isAddMode ? 'Thêm thông tin' : 'Thay đổi thông tin'}
-                </span>
-                <span className={clsx('dashed-white ms-3', styles.active)} />
-                <span
-                  className={clsx(styles.doted, {
-                    [styles.activeBorder]: next,
-                  })}
-                ></span>
-                <span
-                  className={clsx('dashed-white me-3', {
-                    [styles.active]: next,
-                  })}
-                />
-                <span
-                  className={clsx({
-                    [styles.activeText]: next,
-                  })}
-                >
-                  Thêm chi tiết
-                </span>
-              </h4>
-              {next ? (
-                <NextForm
-                  onSubmit={handleOnSubmit}
-                  value={detailValue}
-                  isAddMode={isAddMode}
-                  onChangeValue={handleChangeValue}
-                  onPrevForm={() => {
-                    setNext(false);
-                    setReplace(true);
-                  }}
-                  onCancelForm={handleOnCancelForm}
-                />
-              ) : (
-                <FormikForm
-                  initialValues={initialValues}
-                  validationSchema={validateSchemaProductCreate}
-                  onSubmit={handleOnSubmit}
-                  action={isAddMode ? 'Thêm mới' : 'Thay đổi'}
-                  isAddMode={isAddMode}
-                  disabledHeader
-                  arrSelect={{
-                    name: 'category_id',
-                    arrOptions: arrSelect,
-                    label: 'Danh mục',
-                    icon: faBook,
-                    labelFirst: 'Chọn danh mục',
-                  }}
-                >
-                  <FormRow arrFileds={arrNameAndPriceProduct} isAddMode={isAddMode} />
-                  <FormRow arrFileds={arrNumAndKeyProduct} isAddMode={isAddMode} />
-                </FormikForm>
-              )}
+              <h4 className="main-card__header">Thêm mới</h4>
+
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validateSchemaProductCreate}
+                onSubmit={handleOnSubmit}
+              >
+                {({ isSubmitting, errors, values, touched, setFieldValue }) => {
+                  // console.log({ errors, values, touched });
+
+                  const showError = errors['thumbnail'] && touched['thumbnail'] ? true : false;
+                  const notError = values['thumbnail'] && !errors['thumbnail'] ? true : false;
+
+                  // console.log({ showError, notError });
+
+                  return (
+                    <Form>
+                      <FormRow
+                        arrFileds={arrNameAndPriceProduct}
+                        isAddMode={isAddMode === 'ADD' ? true : false}
+                      />
+                      <FormRow
+                        arrFileds={arrNumAndKeyProduct}
+                        isAddMode={isAddMode === 'ADD' ? true : false}
+                      />
+
+                      <FastField
+                        icon={faAudioDescription}
+                        type="textarea"
+                        cols={30}
+                        rows={20}
+                        label="Giới thiệu sản phẩm"
+                        name="disc"
+                        component={InputField}
+                        required
+                      />
+
+                      <Label>
+                        <FontAwesomeIcon className="text-muted" icon={faInfo} />{' '}
+                        <span className="text-muted">{'Chi tiết sản phẩm'}</span>
+                        <span className="text-danger">(*)</span>
+                      </Label>
+
+                      <Markdown value={detailValue} onChangeValueInput={handleChangeValue} />
+
+                      <FormGroup>
+                        <Label htmlFor={'thumbnail'}>
+                          <FontAwesomeIcon className="text-muted mt-3" icon={faFileUpload} />
+                          <span className="text-muted">{'Thêm ảnh tiêu đề'}</span>
+                          <span className="text-danger">
+                            (*) Vui lòng Upload Ảnh trước khi Thêm mới
+                          </span>
+                        </Label>
+
+                        <Input
+                          invalid={showError}
+                          type="file"
+                          name="thumbnail"
+                          valid={notError}
+                          onChange={(event) => {
+                            setFieldValue('thumbnail', event.target.files[0]);
+                            setFilesIMG(event.target.files[0]);
+                          }}
+                          id="thumbnail"
+                        />
+
+                        <span
+                          onClick={handleUploadImg}
+                          className={clsx('fw-bold', styles.customBtn)}
+                        >
+                          Upload Ảnh
+                        </span>
+
+                        <ErrorMessage name="thumbnail" component={FormFeedback} />
+                      </FormGroup>
+
+                      {values && values.thumbnail && <PreviewImage files={values.thumbnail} />}
+
+                      <InputSelect
+                        name="category_id"
+                        arrOptions={arrSelect}
+                        label="Danh mục"
+                        icon={faBook}
+                        labelFirst="Chọn danh mục"
+                        values={values}
+                        errors={errors}
+                        touched={touched}
+                        required
+                      />
+
+                      <Button type="submit" color="primary">
+                        {isSubmitting ? (
+                          <>
+                            <Spinner className="m-1" type="grow" size="sm" />
+                            <Spinner className="m-1" type="grow" size="sm" />
+                            <Spinner className="m-1" type="grow" size="sm" />
+                          </>
+                        ) : (
+                          'Thêm mới'
+                        )}
+                      </Button>
+                    </Form>
+                  );
+                }}
+              </Formik>
             </div>
           </Col>
         </Row>

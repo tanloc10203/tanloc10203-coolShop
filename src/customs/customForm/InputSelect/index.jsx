@@ -5,7 +5,7 @@ import React from 'react';
 import { Col, FormFeedback, FormGroup, Label } from 'reactstrap';
 
 function InputSelect(props) {
-  const { icon, label, name, labelFirst, arrOptions, values, errors, touched } = props;
+  const { icon, label, name, labelFirst, arrOptions, values, errors, required, touched } = props;
   const showError = errors[name] && touched[name];
   const notError = values[name] && !errors[name] ? true : false;
   const invalid = showError ? 'is-invalid' : '';
@@ -16,6 +16,7 @@ function InputSelect(props) {
       <Label for={name}>
         <FontAwesomeIcon className="text-muted" icon={icon} />
         <span className="text-muted">{label}</span>
+        {required ? <span className="text-danger"> (*)</span> : null}
       </Label>
       <Col sm={12}>
         <Field as="select" id={name} name={name} className={`form-select ${invalid} ${valid}`}>

@@ -13,7 +13,7 @@ function ModalTable({ toggle, isOpen, item, name, close }) {
         <ModalFooter>
           <Button color="danger" onClick={() => close(item)}>
             Xóa
-          </Button>{' '}
+          </Button>
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>

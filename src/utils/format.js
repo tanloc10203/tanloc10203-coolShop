@@ -12,6 +12,20 @@ export const cutTextReplacement = (text = '', length) => {
   return replace;
 };
 
+export const getBase64 = (files) => {
+  return new Promise((resolve, reject) => {
+    if (files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files);
+      let objURL = URL.createObjectURL(files);
+      reader.onload = () => {
+        resolve([objURL, reader.result]);
+      };
+      reader.onerror = () => reject();
+    }
+  });
+};
+
 export const formatPrice = (price = 0) => {
   return (price = price?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
 };
