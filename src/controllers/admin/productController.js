@@ -1,8 +1,8 @@
 import {
   handleCreateProduct,
-  handleDeleteProduct, 
+  handleDeleteProduct,
   handleGetProduct,
-  handleGetProductById, 
+  handleGetProductById,
   handleUpdateProduct
 } from "../../services/admin/productService";
 
@@ -10,8 +10,9 @@ let getProduct = async (req, res) => {
   try {
     let page = req.query.page;
     let limit = req.query.limit;
+    const deleteQuery = req.query.delete;
     limit = limit || 5;
-    let message = await handleGetProduct(page, limit);
+    let message = await handleGetProduct(page, limit, deleteQuery);
     return res.json(message);
   } catch (error) {
     console.error(error);
@@ -44,7 +45,8 @@ let createProduct = async (req, res) => {
 let deleteProduct = async (req, res) => {
   try {
     let id = req.params.id;
-    let message = await handleDeleteProduct(id);
+    const deleteQuery = req.query.delete;
+    let message = await handleDeleteProduct(id, deleteQuery);
     return res.json(message);
   } catch (error) {
     console.error(error);
@@ -56,7 +58,8 @@ let updateProduct = async (req, res) => {
   try {
     let id = req.params.id;
     let data = req.body;
-    let message = await handleUpdateProduct(id, data);
+    const recover = req.query.recover;
+    let message = await handleUpdateProduct(id, data, recover);
     return res.json(message);
   } catch (error) {
     console.error(error);
@@ -64,10 +67,10 @@ let updateProduct = async (req, res) => {
   }
 }
 
-module.exports = { 
-  getProduct, 
-  getProductById, 
-  createProduct, 
-  deleteProduct, 
-  updateProduct 
+module.exports = {
+  getProduct,
+  getProductById,
+  createProduct,
+  deleteProduct,
+  updateProduct
 };

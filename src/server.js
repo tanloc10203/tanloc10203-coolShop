@@ -48,6 +48,7 @@ app.post("/api/admin/upload", (req, res) => {
     res.json(req.files[0]);
   }
 });
+
 initWebRoutes(app);
 
 app.listen(PORT, () =>

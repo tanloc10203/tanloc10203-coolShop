@@ -16,8 +16,10 @@ let verifyToken = (req, res, next) => {
       // {`Bearer ${your token}`}
       const token = authHeader.split(" ")[1];
       jwt.verify(token, KEY_JWT, (err, user) => {
-        if (err)
+        if (err) {
+          console.error(err);
           res.status(403).json({ error: 2, message: "Token is not valid..." });
+        }
         req.user = user;
         next();
       });
