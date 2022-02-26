@@ -71,3 +71,24 @@ export const validateSchemaProductCreate = Yup.object().shape({
       (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))
     ),
 });
+
+
+export const validateSchemaProductUpdate = Yup.object().shape({
+  name: Yup.string().min(5, 'Có ít nhất 5 kí tự').required('Đây là trường bắt buộc'),
+  price: Yup.number().min(1000, 'Giá thấp nhất là 1.000 đ').required('Đây là trường bắt buộc'),
+  num: Yup.number().required('Đây là trường bắt buộc'),
+  key_product: Yup.string().required('Đây là trường bắt buộc'),
+  category_id: Yup.string().required('Đây là trường bắt buộc'),
+  disc: Yup.string().min(20).required("Đây la trường bắt buộc"),
+  // thumbnail: Yup.mixed()
+  //   .nullable()
+  //   .required("Đây là trương bắt buộc")
+  //   .test('FILE_SIZE', 'Uploaded file is too big.', (value) => {
+  //     return !value || (value && value.size <= FILE_SIZE);
+  //   })
+  //   .test(
+  //     'FILE_FORMAT',
+  //     'Uploaded file has unsupported format.',
+  //     (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))
+  //   ),
+});

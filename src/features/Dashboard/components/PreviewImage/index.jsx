@@ -4,26 +4,28 @@ import React, { useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import styles from './PreviewImage.module.scss';
 
-function PreviewImage({ files }) {
+function PreviewImage({ files, imgURL }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [objURL, base64] = useGetBase64Img(files);
+  const [objURL, base64] = useGetBase64Img(files && files);
 
   return (
     <div>
       <img
-        src={base64 && base64}
-        alt={base64 && base64}
+        src={files ? base64 : imgURL}
+        alt={files ? base64 : imgURL}
         className={styles.imagePreview}
-        onClick={() => files && setIsOpen(true)}
+        onClick={() => (files || imgURL ? setIsOpen(true) : null)}
       />
 
-      {isOpen && <Lightbox mainSrc={objURL && objURL} onCloseRequest={() => setIsOpen(false)} />}
+      {isOpen && (
+        <Lightbox mainSrc={files ? objURL : imgURL} onCloseRequest={() => setIsOpen(false)} />
+      )}
     </div>
   );
 }
 
 PreviewImage.propTypes = {
-  files: PropTypes.object.isRequired,
+  files: PropTypes.object,
 };
 
 export default PreviewImage;

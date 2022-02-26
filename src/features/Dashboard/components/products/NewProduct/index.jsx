@@ -17,7 +17,7 @@ import { createProduct, updateProduct } from 'features/Dashboard/productSlice';
 import { ErrorMessage, FastField, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Col,
@@ -32,9 +32,9 @@ import {
 import {
   arrNameAndPriceProduct,
   arrNumAndKeyProduct,
-  getBase64,
   toast,
   validateSchemaProductCreate,
+  validateSchemaProductUpdate,
 } from 'utils';
 import Markdown from '../../Markdown';
 import PreviewImage from '../../PreviewImage';
@@ -54,8 +54,21 @@ function NewProduct(props) {
   const [prevData, setPrevData] = useState({});
   const [filesIMG, setFilesIMG] = useState(null);
   const [imgUrl, setImgUrl] = useState('');
+  const { state } = useLocation();
+  const isAddMode = !state;
 
-  const isAddMode = true;
+  const getValuesLocation = () => {
+    if (state)
+      return {
+        name: state?.data?.name,
+        price: state?.data?.price,
+        num: state?.data?.num,
+        key_product: state?.data?.key_product,
+        category_id: state?.data?.category_id?._id,
+        disc: state?.data?.disc,
+      };
+  };
+
   const initialValues = isAddMode
     ? {
         name: '',
@@ -66,7 +79,7 @@ function NewProduct(props) {
         disc: '',
         thumbnail: '',
       }
-    : Object.keys(prevData).length > 0 && prevData;
+    : getValuesLocation();
 
   useEffect(() => {
     if (token) dispatch(getCategory({ token, key: 'ALL' }));
@@ -116,26 +129,39 @@ function NewProduct(props) {
                 thumbnail: `${URL_IMG}${imgUrl}`,
               };
 
-              console.log(newData);
-
               const results = await dispatch(createProduct({ token, data: newData }));
 
               if (results.payload && results.payload?.error === 0) {
                 toast.success('Thêm sản phẩm thành công');
                 resetForm();
-                navigate('/admin/product', { replace: true });
               }
             } else toast.warning('Vui lòng Upload Ảnh!!!');
           } else {
+            console.log('values', values);
+            let newData = null;
+            if (imgUrl) {
+              newData = {
+                ...values,
+                detail: detailValue ? detailValue : state?.data?.detailValue,
+                thumbnail: `${URL_IMG}${imgUrl}`,
+              };
+            } else {
+              newData = {
+                ...values,
+                detail: detailValue ? detailValue : state?.data?.detailValue,
+              };
+            }
             result = await dispatch(
-              updateProduct({ token, id: dataCreate && dataCreate._id, data: values })
+              updateProduct({ token, id: state?.data && state?.data?._id, data: newData })
             );
+
+            if (result?.payload?.error === 0) toast.success('Chỉnh sửa thành công.');
           }
 
           if (result?.payload) {
             const { error } = result?.payload;
             if (error === 0) {
-              resetForm();
+              navigate('/admin/product', { replace: true });
             }
           }
           setSubmitting(false);
@@ -176,15 +202,17 @@ function NewProduct(props) {
         <Row>
           <Col md={12}>
             <div className="main-card mt-5">
-              <h4 className="main-card__header">Thêm mới</h4>
+              <h4 className="main-card__header">{isAddMode ? 'Thêm mới' : 'Chỉnh sửa'}</h4>
 
               <Formik
                 initialValues={initialValues}
-                validationSchema={validateSchemaProductCreate}
+                validationSchema={
+                  isAddMode ? validateSchemaProductCreate : validateSchemaProductUpdate
+                }
                 onSubmit={handleOnSubmit}
               >
                 {({ isSubmitting, errors, values, touched, setFieldValue }) => {
-                  // console.log({ errors, values, touched });
+                  console.log({ errors, values, touched });
 
                   const showError = errors['thumbnail'] && touched['thumbnail'] ? true : false;
                   const notError = values['thumbnail'] && !errors['thumbnail'] ? true : false;
@@ -193,14 +221,8 @@ function NewProduct(props) {
 
                   return (
                     <Form>
-                      <FormRow
-                        arrFileds={arrNameAndPriceProduct}
-                        isAddMode={isAddMode === 'ADD' ? true : false}
-                      />
-                      <FormRow
-                        arrFileds={arrNumAndKeyProduct}
-                        isAddMode={isAddMode === 'ADD' ? true : false}
-                      />
+                      <FormRow arrFileds={arrNameAndPriceProduct} isAddMode={isAddMode} />
+                      <FormRow arrFileds={arrNumAndKeyProduct} isAddMode={isAddMode} />
 
                       <FastField
                         icon={faAudioDescription}
@@ -219,14 +241,19 @@ function NewProduct(props) {
                         <span className="text-danger">(*)</span>
                       </Label>
 
-                      <Markdown value={detailValue} onChangeValueInput={handleChangeValue} />
+                      <Markdown
+                        value={state ? state?.data?.detail : detailValue}
+                        onChangeValueInput={handleChangeValue}
+                      />
 
                       <FormGroup>
                         <Label htmlFor={'thumbnail'}>
                           <FontAwesomeIcon className="text-muted mt-3" icon={faFileUpload} />
                           <span className="text-muted">{'Thêm ảnh tiêu đề'}</span>
                           <span className="text-danger">
-                            (*) Vui lòng Upload Ảnh trước khi Thêm mới
+                            {isAddMode
+                              ? ' (*) Vui lòng Upload Ảnh trước khi Thêm mới'
+                              : ' (*) Nếu có thay đổi vui lòng Upload Ảnh trước khi lưu.'}
                           </span>
                         </Label>
 
@@ -252,7 +279,12 @@ function NewProduct(props) {
                         <ErrorMessage name="thumbnail" component={FormFeedback} />
                       </FormGroup>
 
-                      {values && values.thumbnail && <PreviewImage files={values.thumbnail} />}
+                      {values?.thumbnail || state?.data?.thumbnail ? (
+                        <PreviewImage
+                          imgURL={state && state?.data?.thumbnail}
+                          files={values.thumbnail ? values.thumbnail : null}
+                        />
+                      ) : null}
 
                       <InputSelect
                         name="category_id"
@@ -266,15 +298,17 @@ function NewProduct(props) {
                         required
                       />
 
-                      <Button type="submit" color="primary">
+                      <Button type="submit" color={isAddMode ? 'primary' : 'success'}>
                         {isSubmitting ? (
                           <>
                             <Spinner className="m-1" type="grow" size="sm" />
                             <Spinner className="m-1" type="grow" size="sm" />
                             <Spinner className="m-1" type="grow" size="sm" />
                           </>
-                        ) : (
+                        ) : isAddMode ? (
                           'Thêm mới'
+                        ) : (
+                          'Lưu thay đổi'
                         )}
                       </Button>
                     </Form>

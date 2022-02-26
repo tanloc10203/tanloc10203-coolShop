@@ -8,6 +8,7 @@ import { setIsSuccess } from 'features/Dashboard/userSlice';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { cutTextReplacement, formatPrice, toast } from 'utils';
 import ModalTable from '../../container/ModalTable';
@@ -36,6 +37,7 @@ function HomeProduct(props) {
   const [openPreview, setOpenPreview] = useState(false);
   const [dataPreview, setDataPreview] = useState(null);
   const token = useAuth();
+  const navigate = useNavigate();
 
   const getProducts = useCallback(() => {
     if (token) dispatch(getProduct({ token, limit: 4, page: page }));
@@ -70,6 +72,10 @@ function HomeProduct(props) {
     setDataPreview(item);
   };
 
+  const handleOnUpdate = (item) => {
+    if (item) navigate('/admin/product/update-product', { replace: true, state: { data: item } });
+  };
+
   const renderProduct = useMemo(() => {
     return (
       <RenderPaginationTable loading={loading}>
@@ -96,7 +102,12 @@ function HomeProduct(props) {
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </Button>
-                    <Button size="sm" className="me-1" color="primary">
+                    <Button
+                      size="sm"
+                      className="me-1"
+                      color="primary"
+                      onClick={() => handleOnUpdate(item)}
+                    >
                       <FontAwesomeIcon icon={faPenSquare} />
                     </Button>
                     <Button
