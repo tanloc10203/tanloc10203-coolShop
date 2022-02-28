@@ -1,0 +1,74 @@
+.offcanvas {
+  width: 300px;
+}
+
+.header {
+  background: var(--color-primary);
+  height: 150px;
+}
+
+.profile {
+  width: 115px;
+  height: 115px;
+  border-radius: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(69px, 0);
+
+  img {
+    flex-shrink: 0;
+    border-radius: 100%;
+    object-fit: cover;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.navList {
+  margin-top: 32px;
+  list-style: none;
+  padding: 0;
+
+  li a {
+    display: block;
+    padding: 14px 8px;
+    margin: 2px 0;
+    color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    transition: all 0.25s ease-in-out 0s;
+    font-weight: 500;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.09);
+      color: #000;
+    }
+    &.active {
+      background: rgba(0, 0, 0, 0.09);
+      color: #000;
+    }
+  }
+
+  .customCart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg {
+      margin-right: 5px;
+    }
+
+    .customNums {
+      width: 20px;
+      height: 20px;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+      color: #ffff;
+      font-size: 16px;
+    }
+  }
+}

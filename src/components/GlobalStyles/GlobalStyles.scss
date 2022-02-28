@@ -148,3 +148,33 @@ a {
   background: #fff;
   z-index: 1;
 }
+
+.customHoverIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.25s ease-in-out 0s;
+
+  svg {
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.09);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  &:hover::after {
+    visibility: visible;
+    opacity: 1;
+  }
+}
