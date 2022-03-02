@@ -178,3 +178,13 @@ a {
     opacity: 1;
   }
 }
+
+.slick-dots li button:before {
+  font-size: 20px !important;
+}
+
+.slick-slide img {
+  object-fit: cover;
+  width: inherit;
+  height: auto;
+}

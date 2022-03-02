@@ -3,7 +3,7 @@ import React from 'react';
 
 function HomePage(props) {
   return (
-    <div style={{ height: 1000 }}>
+    <div>
       <HomeS />
     </div>
   );
