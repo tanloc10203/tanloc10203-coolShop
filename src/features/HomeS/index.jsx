@@ -7,6 +7,10 @@ import './HomeS.scss';
 import Support from './components/Support';
 
 function HomeS(props) {
+  React.useLayoutEffect(() => {
+    document.title = 'Trang chủ';
+  }, []);
+
   return (
     <>
       <Header />
