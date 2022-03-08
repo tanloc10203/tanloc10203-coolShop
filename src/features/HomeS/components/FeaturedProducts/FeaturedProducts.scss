@@ -1,4 +1,6 @@
 .product {
+  margin-top: 32px;
+
   h1 {
     font-size: 23px;
     font-weight: 600;
@@ -13,7 +15,7 @@
   background: #fff;
   margin: 10px;
   text-align: center;
-  box-shadow: 0 0 20px rgb(0 0 0 / 10%);
+  // box-shadow: 0 0 20px rgb(0 0 0 / 10%);
   transition: all 0.2s ease-in-out 0s;
   display: block;
   overflow: hidden;

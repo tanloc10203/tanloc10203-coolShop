@@ -5,6 +5,7 @@ import Slides from './components/Slides';
 import Main from './components/Main';
 import './HomeS.scss';
 import Support from './components/Support';
+import FooterAndCopyright from './components/FooterAndCopyright';
 
 function HomeS(props) {
   React.useLayoutEffect(() => {
@@ -17,6 +18,7 @@ function HomeS(props) {
       <Slides />
       <Support />
       <Main />
+      <FooterAndCopyright />
     </>
   );
 }

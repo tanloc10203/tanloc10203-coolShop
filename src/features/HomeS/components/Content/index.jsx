@@ -7,6 +7,8 @@ function Content(props) {
   return (
     <div className={styles.content}>
       <FeaturedProducts />
+      <FeaturedProducts />
+      <FeaturedProducts />
     </div>
   );
 }
