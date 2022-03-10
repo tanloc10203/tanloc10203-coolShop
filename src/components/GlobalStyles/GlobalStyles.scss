@@ -139,6 +139,10 @@ a {
   .d-xs-block {
     display: block;
   }
+
+  .mt-sx-5 {
+    margin-top: 16px;
+  }
 }
 
 .dashed-white {
@@ -188,3 +192,13 @@ a {
   width: inherit;
   height: auto;
 }
+
+.main-img-lazy-load {
+  background-color: #ccc;
+}
+
+// @keyframes hidden {
+//   from {
+//     opacity: 0;
+//   }
+// }

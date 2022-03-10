@@ -1,0 +1,26 @@
+.title {
+  position: relative;
+  margin-left: 16px;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: block;
+  font-style: italic;
+
+  &:before {
+    content: ' ';
+    position: absolute;
+    height: 100%;
+    width: 3px;
+    left: -16px;
+    margin-right: 40px;
+    background: var(--color-primary);
+  }
+}
+
+.text {
+  color: rgb(50, 47, 47);
+  text-align: justify;
+  font-style: italic;
+}

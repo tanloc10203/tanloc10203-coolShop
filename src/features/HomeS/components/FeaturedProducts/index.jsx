@@ -4,7 +4,13 @@ import Slider from 'react-slick';
 import { imgFeaturedProduct } from 'utils';
 import './FeaturedProducts.scss';
 import { Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import ImgRender from '../containers/ImgRender';
+import {
+  LazyLoadImage,
+  trackWindowScroll,
+  LazyLoadComponent,
+} from 'react-lazy-load-image-component';
 
 function FeaturedProducts(props) {
   const settings = {
@@ -43,131 +49,96 @@ function FeaturedProducts(props) {
     ],
   };
 
+  const data = [
+    {
+      name: 'Tên sả phẩm',
+      priceOld: '7.400.000',
+      priceNew: '6.390.000đ',
+      img: imgFeaturedProduct.thumb1,
+    },
+    {
+      name: 'Tên sả phẩm',
+      priceOld: '7.400.000',
+      priceNew: '6.390.000đ',
+      img: imgFeaturedProduct.thumb2,
+    },
+    {
+      name: 'Tên sả phẩm',
+      priceOld: '7.400.000',
+      priceNew: '6.390.000đ',
+      img: imgFeaturedProduct.thumb3,
+    },
+    {
+      name: 'Tên sả phẩm',
+      priceOld: '7.400.000',
+      priceNew: '6.390.000đ',
+      img: imgFeaturedProduct.thumb4,
+    },
+    {
+      name: 'Tên sả phẩm',
+      priceOld: '7.400.000',
+      priceNew: '6.390.000đ',
+      img: imgFeaturedProduct.thumb5,
+    },
+    {
+      name: 'Tên sả phẩm',
+      priceOld: '7.400.000',
+      priceNew: '6.390.000đ',
+      img: imgFeaturedProduct.thumb6,
+    },
+  ];
+
   return (
     <div className="product">
       <h1>Sản phẩm nổi bật</h1>
       <div>
         <Slider {...settings}>
-          <div>
-            <Link className="box" to="/">
-              <img src={imgFeaturedProduct.thumb1} alt="" />
-              <div className="box-content">
-                <p>Tên sản phẩm</p>
-                <span>
-                  6.390.000đ <del>7.400.000</del>
-                </span>
-                <div>
-                  <Button size="sm" outline color="primary" className="mb-1">
-                    Thêm giỏ hàng
-                  </Button>
-                  <Button size="sm" outline color="danger">
-                    Mua ngay
-                  </Button>
-                </div>
+          {data &&
+            data.map((item, index) => (
+              <div key={index}>
+                <Link className="box" to="/detail-product">
+                  {/* <img src={item?.img} alt="" /> */}
+                  {/* <ImgRender
+                    maxWidth={205}
+                    url={item.img}
+                    thumb={item.img}
+                    width={200}
+                    height={136}
+                  /> */}
+                  <LazyLoadImage
+                    alt={item.img}
+                    useIntersectionObserver
+                    effect="blur"
+                    delayTime={50}
+                    height={136}
+                    src={item.img} // use normal <img> attributes as props
+                    width={200}
+                    threshold={10}
+                  />
+                  <div className="box-content">
+                    <p>{item?.name}</p>
+                    <span>
+                      {item?.priceNew} <del>{item?.priceOld}</del>
+                    </span>
+                    <div>
+                      <Button size="sm" outline color="primary" className="mb-1">
+                        Thêm giỏ hàng
+                      </Button>
+                      <Button size="sm" outline color="danger">
+                        Mua ngay
+                      </Button>
+                    </div>
+                  </div>
+                </Link>
               </div>
-            </Link>
-          </div>
-          <div>
-            <Link className="box" to="/">
-              <img src={imgFeaturedProduct.thumb2} alt="" />
-              <div className="box-content">
-                <p>Tên sản phẩm</p>
-                <span>
-                  6.390.000đ <del>7.400.000</del>
-                </span>
-                <div>
-                  <Button size="sm" outline color="primary" className="mb-1">
-                    Thêm giỏ hàng
-                  </Button>
-                  <Button size="sm" outline color="danger">
-                    Mua ngay
-                  </Button>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <Link className="box" to="/">
-              <img src={imgFeaturedProduct.thumb3} alt="" />
-              <div className="box-content">
-                <p>Tên sản phẩm</p>
-                <span>
-                  6.390.000đ <del>7.400.000</del>
-                </span>
-                <div>
-                  <Button size="sm" outline color="primary" className="mb-1">
-                    Thêm giỏ hàng
-                  </Button>
-                  <Button size="sm" outline color="danger">
-                    Mua ngay
-                  </Button>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <Link className="box" to="/">
-              <img src={imgFeaturedProduct.thumb4} alt="" />
-              <div className="box-content">
-                <p>Tên sản phẩm</p>
-                <span>
-                  6.390.000đ <del>7.400.000</del>
-                </span>
-                <div>
-                  <Button size="sm" outline color="primary" className="mb-1">
-                    Thêm giỏ hàng
-                  </Button>
-                  <Button size="sm" outline color="danger">
-                    Mua ngay
-                  </Button>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <Link className="box" to="/">
-              <img src={imgFeaturedProduct.thumb5} alt="" />
-              <div className="box-content">
-                <p>Tên sản phẩm</p>
-                <span>
-                  6.390.000đ <del>7.400.000</del>
-                </span>
-                <div>
-                  <Button size="sm" outline color="primary" className="mb-1">
-                    Thêm giỏ hàng
-                  </Button>
-                  <Button size="sm" outline color="danger">
-                    Mua ngay
-                  </Button>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <Link className="box" to="/">
-              <img src={imgFeaturedProduct.thumb6} alt="" />
-              <div className="box-content">
-                <p>Tên sản phẩm</p>
-                <span>
-                  6.390.000đ <del>7.400.000</del>
-                </span>
-                <div>
-                  <Button size="sm" outline color="primary" className="mb-1">
-                    Thêm giỏ hàng
-                  </Button>
-                  <Button size="sm" outline color="danger">
-                    Mua ngay
-                  </Button>
-                </div>
-              </div>
-            </Link>
-          </div>
+            ))}
         </Slider>
       </div>
+      <Outlet />
     </div>
   );
 }
 
 FeaturedProducts.propTypes = {};
 
-export default FeaturedProducts;
+export default trackWindowScroll(FeaturedProducts);

@@ -1,5 +1,6 @@
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CustomLink from 'components/CustomLink';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Offcanvas, OffcanvasBody, OffcanvasHeader } from 'reactstrap';
@@ -28,36 +29,34 @@ function NavResponesive({ isOpen, toggle }) {
           <div className={styles.nav}>
             <ul className={styles.navList}>
               <li className={styles.navItem}>
-                <Link className={styles.active} to="/">
-                  Trang chủ
-                </Link>
+                <CustomLink to="/">Trang chủ</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/">Sản phẩm</Link>
+                <CustomLink to="/product">Sản phẩm</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/">Thư viện</Link>
+                <CustomLink to="/blog">Blog</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/">Giới thiệu</Link>
+                <CustomLink to="/introduce">Giới thiệu</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/">Liên hệ</Link>
+                <CustomLink to="/contact">Liên hệ</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/">Đăng nhập</Link>
+                <CustomLink to="/login">Đăng nhập</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/">Đăng ký</Link>
+                <CustomLink to="/register">Đăng ký</CustomLink>
               </li>
               <li className={styles.navItem}>
-                <Link to="/" className={styles.customCart}>
+                <CustomLink to="/cart" className={styles.customCart}>
                   <span>
                     <FontAwesomeIcon icon={faShoppingCart} />
                     <span>Giỏ hàng</span>
                   </span>
                   <span className={styles.customNums}>1</span>
-                </Link>
+                </CustomLink>
               </li>
             </ul>
           </div>

@@ -1,5 +1,5 @@
 .product {
-  margin-top: 32px;
+  margin-top: 64px;
 
   h1 {
     font-size: 23px;
@@ -25,7 +25,7 @@
     display: inline-block;
     margin-right: 0 !important;
     width: 200px;
-    transition: all 0.2s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s !important;
   }
 
   &-content {

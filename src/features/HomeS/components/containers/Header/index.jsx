@@ -8,9 +8,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
+import CustomLink from 'components/CustomLink';
 import { useWindowScroll, useWindowSize } from 'hooks';
-import React, { useState, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useLayoutEffect, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import { Col, Container, Input, Label, Row } from 'reactstrap';
 import NavResponesive from '../NavResponesive';
 import styles from './Header.module.scss';
@@ -47,9 +48,9 @@ function Header(props) {
                       <FontAwesomeIcon icon={faSearch} className={styles.iconHiddenSm} />
                     </span>
                     <div>
-                      <span className="customHoverIcon">
+                      <CustomLink to="/cart" className="customHoverIcon">
                         <FontAwesomeIcon icon={faShoppingCart} />
-                      </span>
+                      </CustomLink>
                       <span className={styles.customNums}>1</span>
                     </div>
                     <span className="customHoverIcon">
@@ -70,21 +71,19 @@ function Header(props) {
               <div className={styles.nav}>
                 <ul className={styles.navList}>
                   <li className={styles.navItem}>
-                    <Link className={styles.active} to="/">
-                      Trang chủ
-                    </Link>
+                    <CustomLink to="/">Trang chủ</CustomLink>
                   </li>
                   <li className={styles.navItem}>
-                    <Link to="/">Sản phẩm</Link>
+                    <CustomLink to="/product">Sản phẩm</CustomLink>
                   </li>
                   <li className={styles.navItem}>
-                    <Link to="/">Thư viện</Link>
+                    <CustomLink to="/blog">Blog</CustomLink>
                   </li>
                   <li className={styles.navItem}>
-                    <Link to="/">Giới thiệu</Link>
+                    <CustomLink to="/introduce">Giới thiệu</CustomLink>
                   </li>
                   <li className={styles.navItem}>
-                    <Link to="/">Liên hệ</Link>
+                    <CustomLink to="/contact">Liên hệ</CustomLink>
                   </li>
                 </ul>
               </div>
@@ -116,6 +115,7 @@ function Header(props) {
         </Container>
       </div>
       <NavResponesive isOpen={open} toggle={() => setOpen(!open)} />
+      <Outlet />
     </>
   );
 }
