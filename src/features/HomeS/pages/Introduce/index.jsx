@@ -4,6 +4,8 @@ import PageRoot from '../PageRoot';
 import { Helmet } from 'react-helmet';
 import MainContent from 'features/HomeS/components/containers/MainContent';
 import styles from './Introduce.module.scss';
+import BreadCrumbChange from 'features/HomeS/components/BreadCrumbChange';
+import { Col, Container, Row } from 'reactstrap';
 
 function Introduce(props) {
   return (
@@ -11,6 +13,13 @@ function Introduce(props) {
       <Helmet>
         <title>Giới thiệu</title>
       </Helmet>
+      <Container fluid>
+        <Row>
+          <Col>
+            <BreadCrumbChange name="Giới thiệu" />
+          </Col>
+        </Row>
+      </Container>
       <MainContent>
         <span className={styles.title}>Tổng quan</span>
         <p className={styles.text}>

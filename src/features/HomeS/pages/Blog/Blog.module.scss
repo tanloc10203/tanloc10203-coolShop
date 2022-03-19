@@ -1,0 +1,60 @@
+.listItem {
+  li {
+    display: flex;
+    // margin-right: -16px;
+    margin-bottom: 23px;
+
+    & > a {
+      width: 30%;
+      margin-right: 16px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: all 0.25s ease-in-out 0s;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    div {
+      width: 70%;
+      a {
+        text-align: justify;
+        font-size: 21px;
+        line-height: 30px;
+        padding-bottom: 5px;
+        display: block;
+      }
+
+      span {
+        display: block;
+        font-size: 14px;
+        padding-bottom: 5px;
+        color: #989898;
+        font-style: italic;
+      }
+
+      p {
+        text-align: justify;
+        line-height: 26px;
+        color: #3f3f3f;
+        font-size: 15px;
+        text-align: justify;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -moz-line-clamp: 3;
+        -o-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -o-box-orient: vertical;
+        max-height: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+}

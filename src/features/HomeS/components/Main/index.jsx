@@ -16,7 +16,9 @@ function Main(props) {
             <Row>
               {width >= 1029.89 && (
                 <Col md={3}>
-                  <SideBar />
+                  <div className="main-sidebar">
+                    <SideBar />
+                  </div>
                 </Col>
               )}
               <Col md={12} lg={width <= 1029 ? 12 : 9}>

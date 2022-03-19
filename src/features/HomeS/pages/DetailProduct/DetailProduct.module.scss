@@ -1,0 +1,130 @@
+.product {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0px 0px 9px 1px rgb(0 0 0 / 20%);
+  padding: 30px 16px;
+  display: flex;
+
+  &Left {
+    width: 39.9999%;
+    text-align: center;
+    padding: 0 16px;
+
+    & > span {
+      border: 1px solid #d0d0d0;
+      margin-bottom: 16px;
+      width: 100%;
+      border-radius: 5px;
+      padding: 5px;
+      width: 100%;
+      // height: 300px;
+
+      img {
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &Right {
+    width: 59.9999%;
+    margin-left: 16px;
+    border-left: 1px solid #d0d0d0;
+    padding-left: 16px;
+
+    & > p {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #d0d0d0;
+    }
+
+    .desc {
+      padding: 0;
+      margin: 0;
+      li {
+        display: table;
+        width: 100%;
+        padding: 5px 0;
+        text-align: left;
+      }
+
+      span {
+        display: table-cell;
+        width: 30%;
+        vertical-align: top;
+        padding: 5px 10px;
+        font-size: 14px;
+        color: #666;
+        font-weight: bold;
+      }
+
+      li:nth-child(2n + 1) {
+        background: #eee;
+      }
+
+      li:nth-child(2n + 2) {
+        background: #f5f5f5;
+      }
+
+      p {
+        display: table-cell;
+        width: auto;
+        vertical-align: top;
+        padding: 6px 5px;
+        font-size: 14px;
+        color: #333;
+      }
+    }
+
+    .price {
+      margin-bottom: 5px;
+      span {
+        font-size: 28px;
+        color: #f12a43;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+    }
+
+    .numProduct {
+      color: #666;
+      margin-top: 16px;
+
+      .status {
+        background: #ddd;
+        padding: 6px 10px;
+        display: inline-block;
+      }
+    }
+
+    .numOrderWp {
+      margin-bottom: 25px;
+    }
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 30px;
+    font-size: 16px;
+    background: green;
+    color: #fff;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+}
+
+.itemSlides {
+  span {
+    border: 1px solid #d0d0d0;
+    width: 95%;
+    border-radius: 5px;
+    padding: 3px;
+
+    img {
+      cursor: pointer;
+    }
+  }
+}

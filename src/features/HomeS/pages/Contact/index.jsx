@@ -4,6 +4,7 @@ import PageRoot from '../PageRoot';
 import { Helmet } from 'react-helmet';
 import { Button, Col, Container, FormGroup, Input, Label, Row } from 'reactstrap';
 import MainContent from 'features/HomeS/components/containers/MainContent';
+import BreadCrumbChange from 'features/HomeS/components/BreadCrumbChange';
 
 function Contact(props) {
   return (
@@ -11,6 +12,13 @@ function Contact(props) {
       <Helmet>
         <title>Liên hệ</title>
       </Helmet>
+      <Container fluid>
+        <Row>
+          <Col>
+            <BreadCrumbChange name="Liên hệ" />
+          </Col>
+        </Row>
+      </Container>
       <MainContent>
         <h4 className="text-center text-primary">Liên hệ</h4>
         <Row>

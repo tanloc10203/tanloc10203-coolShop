@@ -4,9 +4,9 @@ import styles from './SideBar.module.scss';
 
 function SideBar(props) {
   return (
-    <div className={styles.main}>
-      <Category />
-    </div>
+    // <div className={styles.main}>
+    <Category />
+    // </div>
   );
 }
 

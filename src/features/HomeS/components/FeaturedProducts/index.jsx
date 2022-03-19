@@ -97,14 +97,6 @@ function FeaturedProducts(props) {
             data.map((item, index) => (
               <div key={index}>
                 <Link className="box" to="/detail-product">
-                  {/* <img src={item?.img} alt="" /> */}
-                  {/* <ImgRender
-                    maxWidth={205}
-                    url={item.img}
-                    thumb={item.img}
-                    width={200}
-                    height={136}
-                  /> */}
                   <LazyLoadImage
                     alt={item.img}
                     useIntersectionObserver
