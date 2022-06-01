@@ -20,4 +20,10 @@ let ProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product", ProductSchema);
+ProductSchema.index({ name: 'text' });
+
+const Product = mongoose.model("Product", ProductSchema);
+
+Product.createIndexes({ name: 'text' });
+
+module.exports = Product;

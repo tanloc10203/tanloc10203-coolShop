@@ -3,7 +3,8 @@ import {
   handleDeleteProduct,
   handleGetProduct,
   handleGetProductById,
-  handleUpdateProduct
+  handleUpdateProduct,
+  handleSearchProduct
 } from "../../services/admin/productService";
 
 let getProduct = async (req, res) => {
@@ -67,10 +68,22 @@ let updateProduct = async (req, res) => {
   }
 }
 
+let searchProduct = async (req, res) => {
+  try {
+    const filter = req.query;
+    let message = await handleSearchProduct(filter);
+    return res.json(message);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: - 1, message: "Error from server..." });
+  }
+}
+
 module.exports = {
   getProduct,
   getProductById,
   createProduct,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  searchProduct
 };

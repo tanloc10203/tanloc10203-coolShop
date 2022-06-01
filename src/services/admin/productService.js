@@ -186,10 +186,30 @@ let handleDeleteProduct = (id, deleteQuery) => {
   });
 };
 
+const handleSearchProduct = (filter) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const order = Object.keys(filter);
+      const nameF = filter[order].trim();
+      const response = await Product.find({
+        "$or": [
+          { name: { $regex: nameF } },
+          // { detail: { $regex: nameF } }
+        ]
+      })
+
+      resolve({ data: response, error: 0, message: 'Success' });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 module.exports = {
   handleGetProduct,
   handleGetProductById,
   handleCreateProduct,
   handleUpdateProduct,
   handleDeleteProduct,
+  handleSearchProduct,
 };
